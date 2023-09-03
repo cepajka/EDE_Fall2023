@@ -41,10 +41,12 @@ Enter answers to the questions just below the >Answer: prompt.
 
 > Answer: 
 I have no experience with data analytics, R, or Git. I have a biology degree and the closest I ever got to analytics on a computer was using GIS.
+
 2. Are there any components of the course about which you feel confident?
 
 > Answer: 
 I am confident in my ability to work hard and put in a lot of time to learn new things.
+
 3. Are there any components of the course about which you feel apprehensive?
 
 > Answer: 
