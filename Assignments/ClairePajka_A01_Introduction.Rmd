@@ -48,7 +48,7 @@ I am confident in my ability to work hard and put in a lot of time to learn new 
 3. Are there any components of the course about which you feel apprehensive?
 
 > Answer: 
-I am apprehensive about the difficulty of the course, as I have no experience with coding or data analytcs.
+I am apprehensive about the difficulty of the course, as I have no experience with coding or data analytics.
 
 ## 3) GitHub
 
