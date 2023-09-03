@@ -55,6 +55,6 @@ I am apprehensive about the difficulty of the course, as I have no experience wi
 Provide a link below to your forked course repository in GitHub. Make sure you have pulled all recent changes from the course repository and that you have updated your course README file, committed those changes, and pushed them to your GitHub account. 
 
 > Answer: 
-
+https://github.com/cepajka/EDE_Fall2023/tree/7082140311c40e01d0197f95acda1233058351c1/Assignments
 ## 4) Knitting
 When you have completed this document, click the `knit` button.This should produce a PDF copy of your markdown document. Submit this PDF to Sakai. 
