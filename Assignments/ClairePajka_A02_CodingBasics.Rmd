@@ -1,6 +1,6 @@
 ---
 title: "Assignment 2: Coding Basics"
-author: "Student Name"
+author: "Claire Pajka"
 output: pdf_document
 geometry: margin=2.54cm
 editor_options: 
@@ -31,11 +31,11 @@ This exercise accompanies the lessons in Environmental Data Analytics on coding 
 4.  Insert comments in your code to describe what you are doing.
 
 ```{r basics 1}
-#1. 
-
-#2. 
-
-#3. 
+#1. seq(1,30,3)
+sequence_basic_A02 <- seq(1,30,3) #naming the sequence
+#2. mean(sequence_basic_A02)
+median(sequence_basic_A02)
+#3. mean(sequence_basic_A02) > median(sequence_basic_A02) #asking if the mean is greater than the median
 
 ```
 
