@@ -78,8 +78,9 @@ passing_score <- function(test_score){
     print ("Fail")
   }
 }
+ifelse(test_score > 50, "Pass", "Fail")
 ```
 
 12. QUESTION: Which option of `if` and `else` vs. `ifelse` worked? Why?
 
-> Answer:
+> Answer: ifelse worked. This is because it is working with a true/false scenario, and is not dealing with integers or further numerical calculations after the initial logical expression: 'pass' acts as the action preformed/outcome if true, and 'fail' acts as the action preformed/outcome if false. 
