@@ -59,6 +59,7 @@ pass_test <- test_score >= 50 #logical data
 data.frame(student_name, test_score, pass_test)
 student_passing <- data.frame(student_name, test_score, pass_test)
 colnames(student_passing) <- c("Student", "Score", "Passed")
+student_passing
 typeof(student_name)
 typeof(test_score)
 typeof(pass_test)
