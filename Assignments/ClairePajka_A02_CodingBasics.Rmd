@@ -71,7 +71,13 @@ typeof(pass_test)
 11. Apply your function to the vector with test scores that you created in number 5.
 
 ```{r basics 3}
-
+passing_score <- function(test_score){
+  if(test_score > 50){
+    print ("Pass")
+  } else {
+    print ("Fail")
+  }
+}
 ```
 
 12. QUESTION: Which option of `if` and `else` vs. `ifelse` worked? Why?
