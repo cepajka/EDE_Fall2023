@@ -33,12 +33,12 @@ This exercise accompanies the lessons in Environmental Data Analytics on coding 
 ```{r basics 1}
 #1. 
 seq(1,30,3)
-sequence_basic_A02 <- seq(1,30,3) #naming the sequence. output sequence given is 1, 4, 7, 10, 13, 16, 19, 22, 25, 28
+sequence_basic_A02 <- seq(1,30,3) #assigning the sequence a name. 
 #2. 
-mean(sequence_basic_A02) #output says mean is 14.5
-median(sequence_basic_A02) #output says median is 14.5
+mean(sequence_basic_A02) #finding mean of newly named sequence
+median(sequence_basic_A02) #finding the median of newly named sequence
 #3. 
-mean(sequence_basic_A02) > median(sequence_basic_A02) #output says false, the mean is not greater than the median. 
+mean(sequence_basic_A02) > median(sequence_basic_A02) #the mean is not greater than the median. 
 
 ```
 
