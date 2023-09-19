@@ -88,25 +88,30 @@ sort(summary(Neonics$Species.Common.Name), decreasing = TRUE)
 class(Neonics$Conc.1..Author.)
 ```
 
-> Answer:
+> Answer: It is a factor class. This may be because certain entries have non-numeric data in them. Some rows have NR in place of a number, Rstudio will not classify NR as a numeric value.
 
 ## Explore your data graphically (Neonics)
 
 9.  Using `geom_freqpoly`, generate a plot of the number of studies conducted by publication year.
 
-```{r}
+```{r Frequency_Plot}
+ggplot(Neonics) +
+  geom_freqpoly(aes(x = Neonics$Publication.Year)) #do I need limits here
 
 ```
 
 10. Reproduce the same graph but now add a color aesthetic so that different Test.Location are displayed as different colors.
 
-```{r}
-
+```{r Frequency_Plot_Colors}
+ggplot(Neonics) +
+  geom_freqpoly(aes(x = Publication.Year, color=Test.Location), bins=100) +
+  scale_x_continuous(limits = c(1982,2014))+
+  theme(legend.position = "top")
 ```
 
 Interpret this graph. What are the most common test locations, and do they differ over time?
 
-> Answer:
+> Answer: Test location does vary over time. Between 1990 and 2000, natural fields were a more common test location than labs, however, after 2000, the lab test locations started increasing and was higher than natural field test locations, esooecially in the years following 2010. This can be seen especially well after increasing the bins from 50 to 100.
 
 11. Create a bar graph of Endpoint counts. What are the two most common end points, and how are they defined? Consult the ECOTOX_CodeAppendix for more information. 
 
