@@ -43,18 +43,18 @@ Litter <- read.csv(file = "C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/R
 
 2.  The neonicotinoid dataset was collected from the Environmental Protection Agency's ECOTOX Knowledgebase, a database for ecotoxicology research. Neonicotinoids are a class of insecticides used widely in agriculture. The dataset that has been pulled includes all studies published on insects. Why might we be interested in the ecotoxicology of neonicotinoids on insects? Feel free to do a brief internet search if you feel you need more background information.
 
-> Answer:
+> Answer: Ecotoxicology refers to the way that substances and chemicals interact and affect environmental systems. Since Neonicotinoids have high toxicity specifically to insects and are used in agriculture, it is helpful to know how they affect different insects. For example, bees and ladybugs are helpful pollinators that are also insects, and are often not the target of most insecticides, which typically aim to kill bugs that feed on the crop plants, like whitebugs. This dives into the debate of "kill the 'bad' bugs, keep the 'good' bugs".
 
 3.  The Niwot Ridge litter and woody debris dataset was collected from the National Ecological Observatory Network, which collectively includes 81 aquatic and terrestrial sites across 20 ecoclimatic domains. 32 of these sites sample forest litter and woody debris, and we will focus on the Niwot Ridge long-term ecological research (LTER) station in Colorado. Why might we be interested in studying litter and woody debris that falls to the ground in forests? Feel free to do a brief internet search if you feel you need more background information.
 
-> Answer:
+> Answer: Nutrient cycling is heavily impacted by the amount of litter and woody debris on the ground, as well as biodiversity of microbes and fungi. Plant productivity can also be measured using woody debris and biomass. Broader implications of studying ground litter and woody debris include assessing a forest's risk for wildfire and creating wildfire management and mitigation plans, such as prescribed burns to decrease fuel for more catastrophic, fast-spreading fires.
 
 4.  How is litter and woody debris sampled as part of the NEON network? Read the NEON_Litterfall_UserGuide.pdf document to learn more. List three pieces of salient information about the sampling methods here:
 
 > Answer: 
- 1.
- 2.
- 3. 
+ 1. Litter and woody debris are sampled from litter trap pairs (one elevated trap and one ground trap) that are located every 400 square meters of the research area.Litter and woody debris are sorted into separate functional groups after collection, including leaves, needles, twigs/branches, woody material (cones, bark), seeds, flowers, lichen/mosses, and mixed material. The trap areas may be targeted or randomized. 
+ 2. The trap areas may be targeted or randomized depending on the type of vegetation. Sites with greater than 50% aerial cover with woody vegetation are chosen randomly. In areas with less than 50% woody vegetation cover, the sites are distributed randomly.
+ 3.Sampling collection frequency depends on the type of forest: ground traps are sampled once per year, elevated traps in deciduous forest sites are sampled once every 2 weeks, and elevated traps at evergreen sites are sampled once every 1-2 months. 
 
 ## Obtain basic summaries of your data (Neonics)
 
