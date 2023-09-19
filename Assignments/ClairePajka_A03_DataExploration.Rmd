@@ -111,17 +111,19 @@ ggplot(Neonics) +
 
 Interpret this graph. What are the most common test locations, and do they differ over time?
 
-> Answer: Test location does vary over time. Between 1990 and 2000, natural fields were a more common test location than labs, however, after 2000, the lab test locations started increasing and was higher than natural field test locations, esooecially in the years following 2010. This can be seen especially well after increasing the bins from 50 to 100.
+> Answer: Test location does vary over time. Between 1990 and 2000, natural fields were a more common test location than labs, however, after 2000, the lab test locations started increasing and was higher than natural field test locations, esooecially in the years following 2010. This can be seen especially well after increasing the bins from 50 to 100. Artificial fields tended to be lower than both natural fields and lab test locations.
 
 11. Create a bar graph of Endpoint counts. What are the two most common end points, and how are they defined? Consult the ECOTOX_CodeAppendix for more information. 
 
 [**TIP**: Add `theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))` to the end of your plot command to rotate and align the X-axis labels...]
 
-```{r}
-
+```{r BarGraph_Endpoint}
+ggplot(Neonics, aes(x= Endpoint))+
+         geom_bar()
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
-> Answer:
+> Answer:The two most common endpoints are NOEL and LOEL. According to the EPAs' ECOTOX Code Appendix, NOEL stands for No Observable Effect Level and is defined as "the highest dose (concentration) producing effects not significantly different from responses of controls according to author's reported statistical test." LOEL is used for terrestrial responses, stands for Lowest Observable Effect Level, and is defined as "the lowest dose producing effects statistically different from responses of controls."
 
 ## Explore your data (Litter)
 
