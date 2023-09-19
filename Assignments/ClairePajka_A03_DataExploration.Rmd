@@ -60,31 +60,32 @@ Litter <- read.csv(file = "C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/R
 
 5.  What are the dimensions of the dataset?
 
-```{r}
-
+```{r Dataset_Dimensions}
+dim(Neonics) #4623 rows, 30 columns
 ```
 
 6.  Using the `summary` function on the "Effect" column, determine the most common effects that are studied. Why might these effects specifically be of interest?
 
-```{r}
-
+```{r Effect_Summary}
+summary(Neonics$Effect)
 ```
 
-> Answer:
+> Answer: Effects like mortality, feeding behavior, and population are all extremely important in regards to direct agricultural significance: If a bug is dead then it isn't killing crops (mortality & population effects), whether the bug continues to eat the crop treated with the insecticide (feeding behavior) can tell you the efficacy of the insecticide.
 
 
 7.  Using the `summary` function, determine the six most commonly studied species in the dataset (common name). What do these species have in common, and why might they be of interest over other insects? Feel free to do a brief internet search for more information if needed.[TIP: The `sort()` command can sort the output of the summary command...]
 
-```{r}
-
+```{r Neonics_Common_Name_Summary}
+summary(Neonics$Species.Common.Name)
+sort(summary(Neonics$Species.Common.Name), decreasing = TRUE)
 ```
 
-> Answer:
+> Answer: Honey Bee, Parasitic Wasp, Buff Tailed Bumblebee, Carniolan Honey Bee, Bumble Bee, Italian Honeybee. These are all species of interest in that they are likely not the intended target of the insecticide: they are all crucial pollinators, and studying adverse affects to these species in response could tell researchers how much 'collateral damage' to unintended species there is from nicotinoid use.
 
 8.  Concentrations are always a numeric value. What is the class of `Conc.1..Author.` column in the dataset, and why is it not numeric?
 
-```{r}
-
+```{r Conc_Author_Class}
+class(Neonics$Conc.1..Author.)
 ```
 
 > Answer:
