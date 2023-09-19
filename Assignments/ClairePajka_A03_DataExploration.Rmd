@@ -133,32 +133,39 @@ ggplot(Neonics, aes(x= Endpoint))+
 class(Litter$collectDate) #factor originally, not date
 Litter$collectDate <- as.Date(Litter$collectDate, format = "%Y-%m-%d")
 class(Litter$collectDate)
+unique(Litter$collectDate) #August 2nd 2018, and August 30th 2018
 ```
 
 13. Using the `unique` function, determine how many plots were sampled at Niwot Ridge. How is the information obtained from `unique` different from that obtained from `summary`?
 
-```{r}
-
+```{r Unique_Litter}
+unique(Litter$namedLocation) #IM CONFUSED. 10 unique plots? 12 levels?
+summary(Litter$namedLocation)
 ```
 
 > Answer:
 
 14. Create a bar graph of functionalGroup counts. This shows you what type of litter is collected at the Niwot Ridge sites. Notice that litter types are fairly equally distributed across the Niwot Ridge sites.
 
-```{r}
-
+```{r FunctionalGroup_Bargraph}
+ggplot(Litter, aes(x=functionalGroup))+
+  geom_bar()
 ```
 
 15. Using `geom_boxplot` and `geom_violin`, create a boxplot and a violin plot of dryMass by functionalGroup.
 
-```{r}
-
+```{r Geomboxplotgraph_Geomviolingraph}
+ggplot(Litter)+
+  geom_boxplot(aes(x=dryMass, y=functionalGroup))
+ggplot(Litter)+
+  geom_violin(aes(x=dryMass, y=functionalGroup),
+               draw_quantiles = c(0.25, 0.5, 0.75))
 ```
 
 Why is the boxplot a more effective visualization option than the violin plot in this case?
 
-> Answer:
+> Answer: There are outliers in the data (especially for twigs/branches, and needles) that can be seen clearly on the boxplot. The violin plot doesn't show this outlier, and displays the drymass as a higher value than it is in reality (it draws the line all the way to the outlier, and doesnt visual the outlier.) OR Because the functional groups were evenly distributed, the violin plot is not as applicable than the box plot.
 
 What type(s) of litter tend to have the highest biomass at these sites?
 
-> Answer:
+> Answer: Needles and twigs/branches tend to have the highest biomass at these sites.
