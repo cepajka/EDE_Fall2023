@@ -68,9 +68,10 @@ dim(Neonics) #4623 rows, 30 columns
 
 ```{r Effect_Summary}
 summary(Neonics$Effect)
+sort(summary(Neonics$Effect), decreasing = TRUE)
 ```
 
-> Answer: Effects like mortality, feeding behavior, and population are all extremely important in regards to direct agricultural significance: If a bug is dead then it isn't killing crops (mortality & population effects), whether the bug continues to eat the crop treated with the insecticide (feeding behavior) can tell you the efficacy of the insecticide.
+> Answer: Effects like population, mortality, behavior, and feeding behavior are all extremely important in regards to direct agricultural significance: If a bug is dead then it isn't killing crops (mortality & population effects), whether the bug continues to eat the crop treated with the insecticide (feeding behavior) can tell you the efficacy of the insecticide.
 
 
 7.  Using the `summary` function, determine the six most commonly studied species in the dataset (common name). What do these species have in common, and why might they be of interest over other insects? Feel free to do a brief internet search for more information if needed.[TIP: The `sort()` command can sort the output of the summary command...]
@@ -111,7 +112,7 @@ ggplot(Neonics) +
 
 Interpret this graph. What are the most common test locations, and do they differ over time?
 
-> Answer: Test location does vary over time. Between 1990 and 2000, natural fields were a more common test location than labs, however, after 2000, the lab test locations started increasing and was higher than natural field test locations, esooecially in the years following 2010. This can be seen especially well after increasing the bins from 50 to 100. Artificial fields tended to be lower than both natural fields and lab test locations.
+> Answer: Test location does vary over time. Between 1990 and 2000, natural fields were a more common test location than labs, however, after 2000, the lab test locations started increasing and was higher than natural field test locations, especially in the years following 2010. This can be displayed better after increasing the bins from 50 to 100. Artificial fields tended to be lower than both natural fields and lab test locations.
 
 11. Create a bar graph of Endpoint counts. What are the two most common end points, and how are they defined? Consult the ECOTOX_CodeAppendix for more information. 
 
@@ -121,6 +122,7 @@ Interpret this graph. What are the most common test locations, and do they diffe
 ggplot(Neonics, aes(x= Endpoint))+
          geom_bar()
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+sort(summary(Neonics$Endpoint), decreasing = TRUE) #Double checking that graph matches the data shown.
 ```
 
 > Answer:The two most common endpoints are NOEL and LOEL. According to the EPAs' ECOTOX Code Appendix, NOEL stands for No Observable Effect Level and is defined as "the highest dose (concentration) producing effects not significantly different from responses of controls according to author's reported statistical test." LOEL is used for terrestrial responses, stands for Lowest Observable Effect Level, and is defined as "the lowest dose producing effects statistically different from responses of controls."
@@ -139,11 +141,12 @@ unique(Litter$collectDate) #August 2nd 2018, and August 30th 2018
 13. Using the `unique` function, determine how many plots were sampled at Niwot Ridge. How is the information obtained from `unique` different from that obtained from `summary`?
 
 ```{r Unique_Litter}
-unique(Litter$namedLocation) #IM CONFUSED. 10 unique plots? 12 levels?
+unique(Litter$namedLocation)
+length(unique(Litter$namedLocation))
 summary(Litter$namedLocation)
 ```
 
-> Answer:
+> Answer: 12 plots were sampled. The information given in Summary provides statistical values, so in this case, the number of times litter was sampled at each given location. The unique function is not counting the number of times each plot was sampled, but counting each sample site only once so that the output accounts for every individual (unique) site.
 
 14. Create a bar graph of functionalGroup counts. This shows you what type of litter is collected at the Niwot Ridge sites. Notice that litter types are fairly equally distributed across the Niwot Ridge sites.
 
@@ -168,4 +171,4 @@ Why is the boxplot a more effective visualization option than the violin plot in
 
 What type(s) of litter tend to have the highest biomass at these sites?
 
-> Answer: Needles and twigs/branches tend to have the highest biomass at these sites.
+> Answer: Needles and mixed litter tend to have the highest biomass at these sites, followed by twigs/branches with a fairlt lower biomass.
