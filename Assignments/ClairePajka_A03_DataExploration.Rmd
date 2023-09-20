@@ -34,6 +34,8 @@ This exercise accompanies the lessons in Environmental Data Analytics on Data Ex
 
 ```{r Import_Rename_CSV,  message = FALSE}
 #imported csv files from file, import dataset, from base text
+library(tidyverse)
+library(ggplot2)
 Neonics <- read.csv(file = "C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Raw/ECOTOX_Neonicotinoids_Insects_raw.csv", stringsAsFactors = TRUE)
 Litter <- read.csv(file = "C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Raw/NEON_NIWO_Litter_massdata_2018-08_raw.csv", stringsAsFactors = TRUE) #R doesn't like backslashes
 
