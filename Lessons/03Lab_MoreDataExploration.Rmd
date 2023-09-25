@@ -40,10 +40,10 @@ vector2
 vector3 <- c(TRUE,TRUE,TRUE,FALSE,TRUE,FALSE) #logical vector
 vector3
 
-vector1[3] # 
+vector1[3] # square brackets will tell you what the 3rd element of vector 1 will be. vectors are 1 dimensional. only 1 number representing th index.
 
 # Matrices ----
-matrix1 <- matrix(1:20, nrow = 5,ncol = 4) # 
+matrix1 <- matrix(1:20, nrow = 5,ncol = 4) # matrices have 2 dimensions. provide the matrix the sequence of numbers like 1-20, and the number of rows and columns you want
 matrix1
 matrix2 <- matrix(1:20, nrow = 5, ncol = 4, byrow = TRUE) #
 matrix2
@@ -51,11 +51,11 @@ matrix3 <- matrix(1:20, nrow = 5, ncol = 4, byrow = TRUE, # return after comma c
                   dimnames = list(c("uno", "dos", "tres", "quatro", "cinco"), 
                                   c("un", "deux", "trois", "quatre"))) #
 
-matrix1[4, ] #
-matrix1[ , 3] #
+matrix1[4, ] # in respect to the row is before comma
+matrix1[ , 3] # after comma is in respect to the column
 matrix1[c(12, 14)] #
 matrix1[c(12:14)] #
-matrix1[2:4, 1:3] #
+matrix1[2:4, 1:3] # specifying rows 2-4 and columns 1 through 3. 
 
 cells <- c(1, 26, 24, 68)
 rnames <- c("R1", "R2")
@@ -93,26 +93,30 @@ Question: In the R chunk below, write "dataframe1\$". Press `tab` after you type
 
 Find a ten-day forecast of temperatures (Fahrenheit) for Durham, North Carolina. Create two vectors, one representing the high temperature on each of the ten days and one representing the low.
 
-```{r DataExercise-1a}
-
+```{r DataExercise-1a} 
+hightempsF <- c(82, 83, 84, 79, 71, 78, 82, 85, 84, 82, 80, 79, 80, 80)
+lowtempsF <- c(56, 58, 60, 60, 62, 62, 64, 64, 62, 60, 58, 59, 58, 58)
 ```
 
 Now, create two additional vectors that include the ten-day forecast for the high and low temperatures in Celsius. Use a function to create the two new vectors from your existing ones in Fahrenheit.
 
 ```{r DataExercise-1b}
-
+high_C <- (hightempsF -32)*5/9
+low_C <- (hightempsF - 32)*5/9
+}
 ```
 
 Combine your four vectors into a data frame and add informative column names.
 
 ```{r DataExercise-1c}
-
+df_temp <- data.frame("HighTempF"=hightempsF, high_C, lowtempsF, low_C) # the renaming with ""=
 ```
 
 Use the common functions `summary` and `sd` to obtain basic data summaries of the ten-day forecast. How would you call these functions differently for the entire data frame vs. a single column? Attempt to demonstrate both options below.
 
 ```{r DataExercise-1d}
-
+summary(df_temp)
+sd(df_temp$HighTempF) #this one works but you will get an error if no $ because you need to give sd a single vector aka a column of the data set, so sd(df_temp) won't wok
 ```
 
 ### Date objects
@@ -159,7 +163,8 @@ date_obj_today
 #Ex_3 - on your own...
 str_juneteenth <- "19 June 1865"
 #Since the format is month-day-year we will use function mdy()
-#date_juneteenth <- ()
+dmy
+#date_juneteenth <- dmy(str_juneteenth)
 #date_juneteenth
 ```
 
