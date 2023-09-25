@@ -14,11 +14,11 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 library(tidyverse);library(lubridate); library(here)
 
 #Read in data, don't convert strings to factors
-sites <- read.csv(here('Data/Raw/NWIS_SiteFlowData_NE_Raw.csv'))
+sites <- read.csv(here('Data/Raw/NWIS_SiteFlowData_NE_RAW.csv'))
 dim(sites)
 
 #Convert date column to date object
-sites$date <- ymd_hms(sites$date)
+sites$date <- ymd_hms(sites$date) #now this is dates and times. year month day, hour minute seconds.that's what makes it format as POSIXct or POSIXt
 
 ```
 
@@ -28,7 +28,7 @@ sites$date <- ymd_hms(sites$date)
 ```{r create and explore days of week column}
 
 #Compute the day of the week each sample was collected
-sites$dow <- wday(sites$date)
+sites$dow <- wday(sites$date) #wday is the numerical day of the year, and will return the day of the week.
 
 ## What class is the dow column?
 class(sites$dow)
@@ -37,7 +37,7 @@ class(sites$dow)
 unique(sites$dow)
 
 #Summary - is it meaningful?
-summary(sites$dow)
+summary(sites$dow)#this shows like the mean and stuff. unhelpful. not all numbers have numeric meaning. ordinal numbers of days of the week don't really hold meaning for like mean or median. they are labels, and shouldn't be numeric.should be a factor now
 
 ```
 
@@ -54,10 +54,10 @@ class(sites$dow)
 unique(sites$dow)
 
 #Summary - is it meaningful?
-summary(sites$dow)
+summary(sites$dow) #shows them as categories. numbers, and then they're frequency in the dataset?
 
 #Show the levels associated with our factor column
-levels(sites$dow)
+levels(sites$dow) #levels are. factors are a grouping variable. every row in the data set that has a dow column value of 4, they all have a factor in common. factor is a grouping variable. strings as factors, most of the time they are grouping variable. a string would NOT be a grouping variable if like if it was a DNA sequence. where the letters mean something, they are not a grouping variable.
 ```
 
 ## Factors & Levels
@@ -68,14 +68,14 @@ A **factor** is a grouping variable: rows with the same value in the factor colu
 ```{r plot samples recorded each day of the week}
 #Create a bar plot showing the count of samples by day of week
 ggplot(sites,aes(x=dow)) +
-  geom_bar()
+  geom_bar() #making a bar plot. 
 ```
 
 
 
 ```{r add levels to our data}
 #Update the levels to include all seven days of the week (note we have to start with existing levels)
-levels(sites$dow) <- c(levels(sites$dow),"1","2","6","7")
+levels(sites$dow) <- c(levels(sites$dow),"1","2","6","7") #this added the numbers / days of the week that were missing
 
 #Confirm the change
 levels(sites$dow)
@@ -83,7 +83,7 @@ levels(sites$dow)
 #Plot again
 ggplot(sites,aes(x=dow)) +
   geom_bar() + 
-  scale_x_discrete(drop=FALSE)
+  scale_x_discrete(drop=FALSE) #scales let you override defaults. aka things with values of zero would be dropped
 
 ```
 
@@ -91,7 +91,7 @@ We now have all days of the week, but the order is incorrect. Also, we have day 
 ```{r reorder and rename levels}
 
 #Reorder by overwriting the column with the existing values assigned with a new order of levels
-sites$dow <- factor(sites$dow, levels=c("1","2","3","4","5","6","7")) #Or... as.character(seq(1,7))
+sites$dow <- factor(sites$dow, levels=c("1","2","3","4","5","6","7")) #Or... as.character(seq(1,7)) this changes the order of levels
 
 #See that the levels are updated
 levels(sites$dow)
@@ -101,7 +101,7 @@ ggplot(sites,aes(x=dow)) +
   geom_bar() + 
   scale_x_discrete(drop=FALSE)
 
-#Add **labels** to our factors
+#Add **labels** to our factors THIS IS REDOING LABELS FROM LEVELS
 sites$dow <- factor(
   sites$dow, 
   levels=c("1","2","3","4","5","6","7"),
