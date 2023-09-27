@@ -126,10 +126,29 @@ write.csv(EPAair_PM25_NC2019_processed, row.names = FALSE, file = "./Data/Proces
 
 11. Save your processed dataset with the following file name: "EPAair_O3_PM25_NC1819_Processed.csv"
 
-```{r}
+```{r combining_datasets}
 #7 
-
+if (identical(colnames(EPAair_O3_NC2018_processed), colnames(EPAair_O3_NC2019_processed))) {
+  print("Column names are identical.")
+} else {
+  print("Column names are not identical.")
+}
+if (identical(colnames(EPAair_PM25_NC2018_processed), colnames(EPAair_PM25_NC2019_processed))) {
+  print("Column names are identical.")
+} else {
+  print("Column names are not identical.")
+}
+if (identical(colnames(EPAair_O3_NC2018_processed), colnames(EPAair_O3_NC2019_processed))) {
+  print("Column names are identical.")
+} else {
+  print("Column names are not identical.")
+}
+EPAair_combined <- rbind(EPAair_O3_NC2018_processed, EPAair_O3_NC2019_processed, EPAair_PM25_NC2018_processed, EPAair_PM25_NC2019_processed)
+view(EPAair_combined)
 #8 
+EPAair_combined %>%
+  filter(Site.Name == "Linville Falls" | Site.Name == "Durham Armory" | Site.Name =="Leggett" | Site.Name == "Hattie Avenue" | Site.Name == "Clemmons Middle" | Site.Name == "Mendenhall School" | Site.Name == "Frying Pan Mountain" | Site.Name == "West Johnston Co." | Site.Name =="Garinger High School" | Site.Name == "Castle Hayne" | Site.Name == "Pitt Agri. Center" | Site.Name == "Bryson City" | Site.Name =="Millbrook School")
+
 
 #9
 
