@@ -1,6 +1,6 @@
 ---
 title: "Assignment 4: Data Wrangling"
-author: "Student Name"
+author: "Claire Pajka"
 output: pdf_document
 geometry: margin=2.54cm
 ---
@@ -32,13 +32,35 @@ The completed exercise is due on Thursday, Sept 28th @ 5:00pm.
 
 ```{r setup, message = FALSE}
 #1a 
+library(tidyverse)
+library(lubridate)
+library(here)
 
 #1b 
+here()
 
 #1c 
-
+EPAair_O3_NC2018_raw <- read.csv (
+  file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Raw/EPAair_O3_NC2018_raw.csv"), 
+  stringsAsFactors = TRUE
+)
+EPAair_O3_NC2019_raw <- read.csv (
+  file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Raw/EPAair_O3_NC2019_raw.csv"), 
+  stringsAsFactors = TRUE
+)
+EPAair_PM25_NC2018_raw <- read.csv (
+  file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Raw/EPAair_PM25_NC2018_raw.csv"), 
+  stringsAsFactors = TRUE
+)
+EPAair_PM25_NC2019_raw <- read.csv (
+  file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Raw/EPAair_PM25_NC2019_raw.csv"), 
+  stringsAsFactors = TRUE
+)
 #2 
-
+glimpse(EPAair_O3_NC2018_raw)
+glimpse(EPAair_O3_NC2019_raw)
+glimpse(EPAair_PM25_NC2018_raw)
+glimpse(EPAair_PM25_NC2019_raw)
 ```
 
 
@@ -52,9 +74,16 @@ The completed exercise is due on Thursday, Sept 28th @ 5:00pm.
 
 6. Save all four processed datasets in the Processed folder. Use the same file names as the raw files but replace "raw" with "processed".
 
-```{r}
+```{r change_date_selectcols}
 #3
-
+EPAair_O3_NC2018_raw$Date <- mdy(EPAair_O3_NC2018_raw$Date)
+class(EPAair_O3_NC2018_raw$Date)
+EPAair_O3_NC2019_raw$Date <- mdy(EPAair_O3_NC2019_raw$Date)
+class(EPAair_O3_NC2019_raw$Date)
+EPAair_PM25_NC2018_raw$Date <- mdy(EPAair_PM25_NC2018_raw$Date)
+class(EPAair_PM25_NC2018_raw$Date)
+EPAair_PM25_NC2019_raw$Date <- mdy(EPAair_PM25_NC2019_raw$Date)
+class(EPAair_PM25_NC2019_raw$Date)
 #4
 
 #5
