@@ -100,13 +100,13 @@ EPAair_PM25_NC2019_processed$AQS_PARAMETER_DESC <- "PM2.5"
 view(EPAair_PM25_NC2019_processed)
 #6
 write.csv(EPAair_O3_NC2018_processed, row.names = FALSE,  
-          file = "./Data/Processed/EPAair_O3_NC2018_processed.csv")
+file = "./Data/Processed/EPAair_O3_NC2018_processed.csv")
 write.csv(EPAair_O3_NC2019_processed, row.names = FALSE,  
-          file = "./Data/Processed/EPAair_O3_NC2019_processed.csv")
+file = "./Data/Processed/EPAair_O3_NC2019_processed.csv")
 write.csv(EPAair_PM25_NC2018_processed, row.names = FALSE,  
-          file = "./Data/Processed/EPAair_PM25_NC2018_processed.csv")
+file = "./Data/Processed/EPAair_PM25_NC2018_processed.csv")
 write.csv(EPAair_PM25_NC2019_processed, row.names = FALSE,   
-          file = "./Data/Processed/EPAair_PM25_NC2019_processed.csv")
+file = "./Data/Processed/EPAair_PM25_NC2019_processed.csv")
 ```
 
 
