@@ -42,20 +42,16 @@ here()
 #1c 
 EPAair_O3_NC2018_raw <- read.csv (
   file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Raw/EPAair_O3_NC2018_raw.csv"), 
-  stringsAsFactors = TRUE
-)
+  stringsAsFactors = TRUE)
 EPAair_O3_NC2019_raw <- read.csv (
   file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Raw/EPAair_O3_NC2019_raw.csv"), 
-  stringsAsFactors = TRUE
-)
+  stringsAsFactors = TRUE)
 EPAair_PM25_NC2018_raw <- read.csv (
   file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Raw/EPAair_PM25_NC2018_raw.csv"), 
-  stringsAsFactors = TRUE
-)
+  stringsAsFactors = TRUE)
 EPAair_PM25_NC2019_raw <- read.csv (
   file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Raw/EPAair_PM25_NC2019_raw.csv"), 
-  stringsAsFactors = TRUE
-)
+  stringsAsFactors = TRUE)
 #2 
 glimpse(EPAair_O3_NC2018_raw)
 glimpse(EPAair_O3_NC2019_raw)
@@ -85,13 +81,17 @@ class(EPAair_PM25_NC2018_raw$Date)
 EPAair_PM25_NC2019_raw$Date <- mdy(EPAair_PM25_NC2019_raw$Date)
 class(EPAair_PM25_NC2019_raw$Date)
 #4
-EPAair_O3_NC2018_processed <- select(EPAair_O3_NC2018_raw, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPAair_O3_NC2018_processed <- select(EPAair_O3_NC2018_raw, Date, DAILY_AQI_VALUE, Site.Name,  
+AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 summary(EPAair_O3_NC2018_processed)
-EPAair_O3_NC2019_processed <- select(EPAair_O3_NC2019_raw, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPAair_O3_NC2019_processed <- select(EPAair_O3_NC2019_raw, Date, DAILY_AQI_VALUE, Site.Name,  
+AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 summary(EPAair_O3_NC2019_processed)
-EPAair_PM25_NC2018_processed <- select(EPAair_PM25_NC2018_raw, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPAair_PM25_NC2018_processed <- select(EPAair_PM25_NC2018_raw, Date, DAILY_AQI_VALUE, Site.Name,  
+AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 summary(EPAair_PM25_NC2018_processed)
-EPAair_PM25_NC2019_processed <- select(EPAair_PM25_NC2019_raw, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPAair_PM25_NC2019_processed <- select(EPAair_PM25_NC2019_raw, Date, DAILY_AQI_VALUE, Site.Name,  
+AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 summary(EPAair_PM25_NC2019_processed)
 #5
 EPAair_PM25_NC2018_processed$AQS_PARAMETER_DESC <- "PM2.5"
@@ -99,10 +99,14 @@ view(EPAair_PM25_NC2018_processed)
 EPAair_PM25_NC2019_processed$AQS_PARAMETER_DESC <- "PM2.5"
 view(EPAair_PM25_NC2019_processed)
 #6
-write.csv(EPAair_O3_NC2018_processed, row.names = FALSE, file = "./Data/Processed/EPAair_O3_NC2018_processed.csv")
-write.csv(EPAair_O3_NC2019_processed, row.names = FALSE, file = "./Data/Processed/EPAair_O3_NC2019_processed.csv")
-write.csv(EPAair_PM25_NC2018_processed, row.names = FALSE, file = "./Data/Processed/EPAair_PM25_NC2018_processed.csv")
-write.csv(EPAair_PM25_NC2019_processed, row.names = FALSE, file = "./Data/Processed/EPAair_PM25_NC2019_processed.csv")
+write.csv(EPAair_O3_NC2018_processed, row.names = FALSE,  
+          file = "./Data/Processed/EPAair_O3_NC2018_processed.csv")
+write.csv(EPAair_O3_NC2019_processed, row.names = FALSE,  
+          file = "./Data/Processed/EPAair_O3_NC2019_processed.csv")
+write.csv(EPAair_PM25_NC2018_processed, row.names = FALSE,  
+          file = "./Data/Processed/EPAair_PM25_NC2018_processed.csv")
+write.csv(EPAair_PM25_NC2019_processed, row.names = FALSE,   
+          file = "./Data/Processed/EPAair_PM25_NC2019_processed.csv")
 ```
 
 
@@ -143,7 +147,8 @@ if (identical(colnames(EPAair_O3_NC2018_processed), colnames(EPAair_O3_NC2019_pr
 } else {
   print("Column names are not identical.")
 }
-EPAair_combined <- rbind(EPAair_O3_NC2018_processed, EPAair_O3_NC2019_processed, EPAair_PM25_NC2018_processed, EPAair_PM25_NC2019_processed)
+EPAair_combined <- rbind(EPAair_O3_NC2018_processed, EPAair_O3_NC2019_processed,  
+                         EPAair_PM25_NC2018_processed, EPAair_PM25_NC2019_processed)
 view(EPAair_combined)
 #8 
  
@@ -151,7 +156,12 @@ view(EPAair_combined)
 #EPAair_combined$Date <- as.Date(EPAair_combined$Date, format = "%Y-%m-%d")
 EPAair_combined_pipe <-
 EPAair_combined %>%
-  filter(Site.Name == "Linville Falls" | Site.Name == "Durham Armory" | Site.Name =="Leggett" | Site.Name == "Hattie Avenue" | Site.Name == "Clemmons Middle" | Site.Name == "Mendenhall School" | Site.Name == "Frying Pan Mountain" | Site.Name == "West Johnston Co." | Site.Name =="Garinger High School" | Site.Name == "Castle Hayne" | Site.Name == "Pitt Agri. Center" | Site.Name == "Bryson City" | Site.Name =="Millbrook School") %>%
+  filter(Site.Name == "Linville Falls" | Site.Name == "Durham Armory" | Site.Name =="Leggett"  
+         | Site.Name == "Hattie Avenue" | Site.Name == "Clemmons Middle"  
+         | Site.Name == "Mendenhall School" | Site.Name == "Frying Pan Mountain"  
+         | Site.Name == "West Johnston Co." | Site.Name =="Garinger High School"  
+         | Site.Name == "Castle Hayne" | Site.Name == "Pitt Agri. Center"  
+         | Site.Name == "Bryson City" | Site.Name =="Millbrook School") %>%
   group_by(Date, Site.Name, AQS_PARAMETER_DESC, COUNTY) %>% 
   summarise(AQImean= mean(DAILY_AQI_VALUE),
             latitudemean = mean(SITE_LATITUDE),
@@ -161,13 +171,15 @@ EPAair_combined %>%
 dim(EPAair_combined_pipe)
 
 #9
-EPAair_combined_pipe_spread <- pivot_wider(EPAair_combined_pipe, names_from = AQS_PARAMETER_DESC , values_from = AQImean )
+EPAair_combined_pipe_spread <- pivot_wider(EPAair_combined_pipe, names_from = AQS_PARAMETER_DESC,  
+values_from = AQImean )
 view(EPAair_combined_pipe_spread)
 #10
 dim(EPAair_combined_pipe_spread)
 
 #11
-write.csv(EPAair_combined_pipe_spread, row.names = FALSE, file = "./Data/Processed/EPAair_O3_PM25_NC1819_Processed.csv")
+write.csv(EPAair_combined_pipe_spread, row.names = FALSE,  
+file = "./Data/Processed/EPAair_O3_PM25_NC1819_Processed.csv")
 
 ```
 
