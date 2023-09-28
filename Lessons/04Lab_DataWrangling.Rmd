@@ -55,7 +55,7 @@ Filtering allows us to choose certain rows (observations) in our dataset.
 ```{r filter data}
 # note the data types of these two columns
 class(NTL.phys.data$lakeid)
-class(NTL.phys.data$depth)
+class(NTL.phys.data$depth) #grabbing all the rows where the depth column
 
 # dplyr filtering
 NTL.phys.data.surface <- filter(NTL.phys.data, depth == 0)
@@ -67,18 +67,19 @@ NTL.phys.data.PeterPaul <-
 
 # Choose a range of conditions of a numeric or integer variable
 summary(NTL.phys.data$daynum)
-NTL.phys.data.JunethruOctober <- filter(NTL.phys.data, daynum %in% c(152:304))
+NTL.phys.data.JunethruOctober <- filter(NTL.phys.data, daynum %in% c(152:304))#could also use the unique function or the level function
 ```
 
 ```{r Exercise 1 & 2}
 # Exercise 1: 
 # filter NTL.phys.data for the year 1999
 # what code do you need to use, based on the class of the variable?
-
-
+filter(NTL.phys.data, year4 %in% c(1999)) #can also do year4 ==1999
+summary(filter(NTL.phys.data, year4 %in% c(1999)))
 # Exercise 2: 
 # filter NTL.phys.data for Tuesday Lake from 1990 through 1999.
-
+filter(NTL.phys.data, lakename %in% ("Tuesday Lake"), year4 %in% c(1990:1999))
+summary(filter(NTL.phys.data, lakename %in% ("Tuesday Lake"), year4 %in% c(1990:1999)))
 
 ```
 Question: Why don't we filter using row numbers?
