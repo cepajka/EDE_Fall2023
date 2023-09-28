@@ -178,16 +178,22 @@ write.csv(EPAair_combined_pipe_spread, row.names = FALSE, file = "./Data/Process
 
 13. Call up the dimensions of the summary dataset.
 
-```{r}
+```{r generate summary tables}
 
 #12
-
+EPAair_summary <- EPAair_combined_pipe_spread %>%
+  group_by(Site.Name, Month, Year) %>%
+  summarise(mean_ozoneAQI = mean(Ozone),
+            mean_PM2.5AQI = mean(PM2.5)) 
+EPAair_summary_dropozone <- EPAair_summary %>%
+  drop_na(mean_ozoneAQI)
+view(EPAair_summary_dropozone)
 
 #13
-
+dim(EPAair_summary_dropozone)
 
 ```
 
 14. Why did we use the function `drop_na` rather than `na.omit`?
 
-> Answer: 
+> Answer: This is because drop_na can be applied to a single column, while na.omit is applied to an entire data frame. In this case, we only wanted to drop the NA values in the mean ozone column, and not the PM2.5 values, so we used the drop_na function.
