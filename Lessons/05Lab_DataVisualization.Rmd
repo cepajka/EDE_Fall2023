@@ -7,7 +7,7 @@ geometry: margin=2.54cm
 editor_options: 
   chunk_output_type: console
 ---
-
+##changing the color outside aes makes the colors change. colors inside the aesthetics, you are color coding your data. so you assign a column to color, and R will populate that column with different colors. normally its a factor
 ## Objectives
 1. Answer questions on M4/A4
 2. Answer questions on M5 videos
@@ -47,11 +47,11 @@ ggplot(data=data.frame(x=0,y=0))+
     x=0,
     y=0.025,
     label=expression(paste("Mean is ", mu,",", R^{2},'=0.6'))
-    )
+    ) #need to specify 3 things with geom text. you need a value for x and y, and that will be the position of your text. you also need the label, which is the text you want to add to your plot. if not using expressions, just put your text straight into label=. if you have expression, you can use like stat summaries.
 
 #Print the plot
 print(Plot_text)
-
+#have to ask r to print the plot. you can assign it, but it won't print it 
 #Save the plot
 ggsave(
   filename = "./Output/Plot_text.jpg",
@@ -97,12 +97,23 @@ Say we want to plot the number of records each month in the Peter/Paul lakes dat
 #List unique values
 
 #Plot how many Lake observations occur each month
+unique(PeterPaul.chem.nutrients$month)
 
 #Convert month to a factor -- with 12 levels, labelled with month names
+ggplot(PeterPaul.chem.nutrients,
+       aes(x=month))+
+  geom_bar()
 
 #Try again: Plot how many Lake observations occur each month
-
+ggplot(PeterPaul.chem.nutrients,
+       aes(x=factor(month,levels = 1:12,labels=month.abb)))+
+  geom_bar()
 #Alter to include missing months
+ggplot(PeterPaul.chem.nutrients,
+       aes(x=factor(month,
+                    levels = 1:12,labels=month.abb)))+
+  geom_bar()+
+  scale_x_discrete(name = "", drop=FALSE)
 
 #Tidy up the code
 
@@ -229,6 +240,13 @@ Exercise: build your own scatterplots of PeterPaul.chem.nutrients
 # Color your points by year, and facet by lake in two rows.
 # Change the ylab name
 
+ggplot(filter(PeterPaul.chem.nutrients, depth ==0),
+       aes(y=temperature_C,
+           x=daynum,
+           color = year4))+
+  facet_wrap(vars(lakename), nrow=2)+
+  geom_point()+
+  ylab("Suface Temmperature")
 
 #2. 
 # Plot temperature by date. Color your points by depth.
