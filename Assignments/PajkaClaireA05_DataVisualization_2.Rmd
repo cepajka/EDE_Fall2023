@@ -155,15 +155,24 @@ Needle_Weight_drymass_plot <- Litter_mass_trap_processed %>%
              y=dryMass, 
              color = nlcdClass))+
   geom_point()+
-  labs(title="Needle Mass by Month in Peter Lake and Paul Lake",
-       fontface = "bold")+
+  labs(title="Needle Mass by Date in Peter Lake and Paul Lake",
+       fontface = "bold", color = "NLCD Class")+
   ylab("Needle Dry Mass")+
   xlab("Month")+
-  theme(axis.text.x = element_text(angle = 45, hjust=1))
+  scale_x_date(name="Date Collected", date_labels ="%Y - %m - %d", breaks = unique(Litter_mass_trap_processed$collectDate))
+  #axis.text.x = element_text(angle = 45, hjust=1)
 print(Needle_Weight_drymass_plot)
 
 #7
-
+Needlemass_facet <-
+  ggplot(filter(Litter_mass_trap_processed, functionalGroup == "Needles"),
+       aes(y=dryMass,
+           x=collectDate,
+           color = nlcdClass))+
+  facet_wrap(vars(nlcdClass), nrow=1)+
+  geom_point()+
+  ylab("dryMass")
+print(Needlemass_facet)
 
 ```
 Question: Which of these plots (6 vs. 7) do you think is more effective, and why? 
