@@ -159,8 +159,8 @@ Needle_Weight_drymass_plot <- Litter_mass_trap_processed %>%
        fontface = "bold", color = "NLCD Class")+
   ylab("Needle Dry Mass")+
   xlab("Month")+
-  scale_x_date(name="Date Collected", date_labels ="%Y - %m - %d", breaks = unique(Litter_mass_trap_processed$collectDate))
-  #axis.text.x = element_text(angle = 45, hjust=1)
+  scale_x_date(name="Month Collected", date_labels ="%m", breaks = unique(Litter_mass_trap_processed$collectDate))
+  #axis.text.x = element_text(angle = 45, hjust=1
 print(Needle_Weight_drymass_plot)
 
 #7
@@ -168,13 +168,16 @@ Needlemass_facet <-
   ggplot(filter(Litter_mass_trap_processed, functionalGroup == "Needles"),
        aes(y=dryMass,
            x=collectDate,
-           color = nlcdClass))+
+           color = nlcdClass)) +
   facet_wrap(vars(nlcdClass), nrow=1)+
   geom_point()+
-  ylab("dryMass")
+  labs(title="Needle Mass by Date in Peter Lake and Paul Lake",
+       fontface = "bold", color = "NLCD Class")+
+  ylab("Needle Dry Mass")+
+  xlab("Collection Date by Year") #separating by month makes the graphs very cluttered & hard to interpret
 print(Needlemass_facet)
 
 ```
 Question: Which of these plots (6 vs. 7) do you think is more effective, and why? 
 
-> Answer:
+> Answer: I think graph 7 is more effective, because it displays the trends in each different land class area more clearly, and you can see trends over time for each individual land use. For example, in graph 7, you can easily see that the amount of Needle dry mass steadily decreases from 2017 to 2020, but in graph 6, the multiple colors of dots make it more difficult to intrepret.
