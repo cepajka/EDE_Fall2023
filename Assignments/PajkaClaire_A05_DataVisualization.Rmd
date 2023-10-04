@@ -102,6 +102,38 @@ Tip:
 
 ```{r Create boxplots}
 #5 
+Monthly_temp_plot <-
+  ggplot(Lake_Chemistry_Nutrients_PeterPaul_Processed, aes(x=month, y = temperature_C))+
+  geom_boxplot(aes(color = lakename))+
+  labs(title="Monthly Temperature in Peter Lake and Paul Lake", fontface = "bold", color = "Lake Name")+
+  ylab("Temperature in Celcius")+
+  xlab("Month")+
+  mytheme
+print(Monthly_temp_plot)
+#scale_x_date(limits = month(c("5", "10")), 
+    date_breaks = "1 month", date_labels = "%b")+
+  axis.text.x = element_text(angle = 55, hjust = 1)
+  #month <- c(6, 7, 8, 9, 10)
+month.abb[month]
+  
+
+Monthly_Tp_plot <-
+  ggplot(Lake_Chemistry_Nutrients_PeterPaul_Processed, aes(x=month, y = tp_ug))+
+  geom_boxplot(aes(color = lakename))+
+  labs(title="Total Phosphorus by Month in Peter Lake and Paul Lake", fontface = "bold", color = "Lake Name")+
+  ylab("Total Phosphorus")+
+  xlab("Month")
+  mytheme
+print(Monthly_Tp_plot)
+
+Monthly_Tn_plot <-
+  ggplot(Lake_Chemistry_Nutrients_PeterPaul_Processed, aes(x=month, y = tn_ug))+
+  geom_boxplot(aes(color = lakename))+
+  labs(title="Total Nitrogen by Month in Peter Lake and Paul Lake", fontface = "bold", color = "Lake Name")+
+  ylab("Total Nitrogen")+
+  xlab("Month")
+  mytheme
+print(Monthly_Tn_plot)
 
 ```
 
