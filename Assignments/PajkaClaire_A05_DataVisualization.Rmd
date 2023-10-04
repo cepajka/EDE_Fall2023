@@ -65,6 +65,10 @@ class(Lake_ChemistryPhysics_PeterPaul_Processed$sampledate)
 
 ```{r build plot theme}
 #3
+mytheme <- theme_classic(base_size=12)+
+  theme(plot.title= element_text(size= 20, color = "blue"))
+theme(axis.text = element_text(color = "black"))
+legend.position = "top"
 
 ```
 
