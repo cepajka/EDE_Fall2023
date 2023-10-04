@@ -111,10 +111,10 @@ Monthly_temp_plot <-
   mytheme
 print(Monthly_temp_plot)
 #scale_x_date(limits = month(c("5", "10")), 
-    date_breaks = "1 month", date_labels = "%b")+
-  axis.text.x = element_text(angle = 55, hjust = 1)
+    #date_breaks = "1 month", date_labels = "%b")+
+ # axis.text.x = element_text(angle = 55, hjust = 1)
   #month <- c(6, 7, 8, 9, 10)
-month.abb[month]
+#month.abb[month]
   
 
 Monthly_Tp_plot <-
@@ -134,6 +134,10 @@ Monthly_Tn_plot <-
   xlab("Month")
   mytheme
 print(Monthly_Tn_plot)
+
+combined_plot <-
+  plot_grid( Monthly_temp_plot, Monthly_Tn_plot, Monthly_Tp_plot, nrow=3, rel_heights = c(1,1,1))
+print(combined_plot)
 
 ```
 
