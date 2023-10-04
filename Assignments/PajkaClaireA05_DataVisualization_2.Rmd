@@ -32,9 +32,26 @@ This exercise accompanies the lessons in Environmental Data Analytics on Data Vi
 
 ```{r initialize project}
 #1 
+install.packages("cowplot")
+library(tidyverse);library(lubridate);library(here); library(cowplot)
+here()
+Lake_Chemistry_Nutrients_PeterPaul_Processed <- read.csv(
+  file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Processed_KEY/Processed_KEY/NTL-LTER_Lake_Chemistry_Nutrients_PeterPaul_Processed.csv"), stringsAsFactors = TRUE)
+Lake_ChemistryPhysics_PeterPaul_Processed <- read.csv(
+  file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Processed_KEY/Processed_KEY/NTL-LTER_Lake_ChemistryPhysics_PeterPaul_Processed.csv"), stringsAsFactors = TRUE)
+Lake_ChemistryPhysics_PeterPaul_Processed <- read.csv(
+  file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Processed_KEY/Processed_KEY/NTL-LTER_Lake_Nutrients_PeterPaul_Processed.csv"), stringsAsFactors = TRUE)
+Litter_mass_trap_processed <- read.csv(
+  file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Processed_KEY/Processed_KEY/NEON_NIWO_Litter_mass_trap_Processed.csv"), stringsAsFactors = TRUE)
 
 #2 
-
+class(Lake_Chemistry_Nutrients_PeterPaul_Processed$sampledate)
+Lake_Chemistry_Nutrients_PeterPaul_Processed$sampledate <-ymd(Lake_Chemistry_Nutrients_PeterPaul_Processed$sampledate)
+class(Lake_Chemistry_Nutrients_PeterPaul_Processed$sampledate)
+Litter_mass_trap_processed$collectDate <- ymd(Litter_mass_trap_processed$collectDate)
+class(Lake_Chemistry_Nutrients_PeterPaul_Processed$sampledate)
+Lake_ChemistryPhysics_PeterPaul_Processed$sampledate <- ymd(Lake_ChemistryPhysics_PeterPaul_Processed$sampledate)
+class(Lake_ChemistryPhysics_PeterPaul_Processed$sampledate)
 ```
 ## Define your theme
 3. Build a theme and set it as your default theme. Customize the look of at least two of the following: 
@@ -46,7 +63,12 @@ This exercise accompanies the lessons in Environmental Data Analytics on Data Vi
 
 ```{r build plot theme}
 #3
-
+mytheme <- theme_classic(base_size=12)+
+  theme(
+    plot.title= element_text(size= 12, color = "blue", face="bold", hjust = 0.5),
+    axis.text = element_text(size = 12, color = "black"),
+    legend.position = 'bottom')
+theme_set(mytheme)
 ```
 
 ## Create graphs
@@ -56,7 +78,17 @@ For numbers 4-7, create ggplot graphs and adjust aesthetics to follow best pract
 
 ```{r plot total P vs PO4}
 #4 
-
+Peterpaul_PO4plot <-
+  ggplot(Lake_Chemistry_Nutrients_PeterPaul_Processed, aes(x = tp_ug, y = po4, color = lakename))+
+  geom_point()+
+  geom_smooth(method = lm, color = "black")+
+  xlim(0,150)+
+  ylim(0,40)+
+  labs(title="Total Phosphorus and Phosphate in Peter Lake and Paul Lake", fontface = "bold", color = "Lake Name")+
+  ylab("Phosphate")+
+  xlab("Total Phosphorus")
+  mytheme
+print(Peterpaul_PO4plot)
 ```
 
 
@@ -68,7 +100,43 @@ Tip:
 
 ```{r Create boxplots}
 #5 
+Monthly_temp_plot <-
+  ggplot(Lake_Chemistry_Nutrients_PeterPaul_Processed, aes(x=factor(month, levels = 1:12, labels = month.abb), y = temperature_C))+
+  geom_boxplot(aes(color = lakename))+
+  labs(title="Monthly Temperature in Peter Lake and Paul Lake", fontface = "bold", color = "Lake Name")+
+  ylab("Temperature in Celcius")+
+  xlab("Month")+
+  scale_x_discrete(name="Month", drop=FALSE)+
+  theme(axis.text.x = element_text(angle = 45, hjust=1))
+  mytheme
+print(Monthly_temp_plot)
 
+Monthly_Tp_plot <-
+  ggplot(Lake_Chemistry_Nutrients_PeterPaul_Processed, aes(x=factor(month, levels = 1:12, labels = month.abb), y = tp_ug))+
+  geom_boxplot(aes(color = lakename))+
+  labs(title="Total Phosphorus by Month in Peter Lake and Paul Lake", fontface = "bold", color = "Lake Name")+
+  ylab("Total Phosphorus")+
+  xlab("Month")+
+  scale_x_discrete(name="Month", drop=FALSE)+
+  theme(axis.text.x = element_text(angle = 45, hjust=1))
+  mytheme
+print(Monthly_Tp_plot)
+
+Monthly_Tn_plot <-
+  ggplot(Lake_Chemistry_Nutrients_PeterPaul_Processed, aes(x=factor(month, levels = 1:12, labels = month.abb), y = tn_ug))+
+  geom_boxplot(aes(color = lakename))+
+  labs(title="Total Nitrogen by Month in Peter Lake and Paul Lake", fontface = "bold", color = "Lake Name")+
+  ylab("Total Nitrogen")+
+  xlab("Month")+
+  scale_x_discrete(name="Month", drop=FALSE)+
+  theme(axis.text.x = element_text(angle = 45, hjust=1))
+  mytheme
+print(Monthly_Tn_plot)
+
+combined_plot <-
+  plot_grid(Monthly_temp_plot, Monthly_Tn_plot, Monthly_Tp_plot, ncol=3, align = 'h', axis = 'tb')+
+  theme(axis.text.x = element_text(angle = 45, hjust=1))
+print(combined_plot)
 ```
 
 Question: What do you observe about the variables of interest over seasons and between lakes? 
@@ -81,7 +149,18 @@ Question: What do you observe about the variables of interest over seasons and b
 
 ```{r Plot litter}
 #6
-
+Needle_Weight_drymass_plot <- Litter_mass_trap_processed %>%
+  filter(functionalGroup == "Needles") %>%
+  ggplot(aes(x=collectDate, 
+             y=dryMass, 
+             color = nlcdClass))+
+  geom_point()+
+  labs(title="Needle Mass by Month in Peter Lake and Paul Lake",
+       fontface = "bold")+
+  ylab("Needle Dry Mass")+
+  xlab("Month")+
+  theme(axis.text.x = element_text(angle = 45, hjust=1))
+print(Needle_Weight_drymass_plot)
 
 #7
 
