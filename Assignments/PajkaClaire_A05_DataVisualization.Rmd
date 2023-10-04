@@ -36,15 +36,14 @@ install.packages("cowplot")
 library(tidyverse);library(lubridate);library(here); library(cowplot)
 here()
 Lake_Chemistry_Nutrients_PeterPaul_Processed <- read.csv(
-  file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Processed_KEY/Processed_KEY/NTL-LTER_Lake_Chemistry_Nutrients_PeterPaul_Processed.csv")
-)
+  file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Processed_KEY/Processed_KEY/NTL-LTER_Lake_Chemistry_Nutrients_PeterPaul_Processed.csv"), stringsAsFactors = TRUE)
 Lake_ChemistryPhysics_PeterPaul_Processed <- read.csv(
-  file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Processed_KEY/Processed_KEY/NTL-LTER_Lake_ChemistryPhysics_PeterPaul_Processed.csv"))
+  file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Processed_KEY/Processed_KEY/NTL-LTER_Lake_ChemistryPhysics_PeterPaul_Processed.csv"), stringsAsFactors = TRUE)
 Lake_ChemistryPhysics_PeterPaul_Processed <- read.csv(
-  file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Processed_KEY/Processed_KEY/NTL-LTER_Lake_Nutrients_PeterPaul_Processed.csv"))
+  file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Processed_KEY/Processed_KEY/NTL-LTER_Lake_Nutrients_PeterPaul_Processed.csv"), stringsAsFactors = TRUE)
 Litter_mass_trap_processed <- read.csv(
-  file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Processed_KEY/Processed_KEY/NEON_NIWO_Litter_mass_trap_Processed.csv")
-)
+  file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Processed_KEY/Processed_KEY/NEON_NIWO_Litter_mass_trap_Processed.csv"), stringsAsFactors = TRUE)
+
 
 #2 
 class(Lake_Chemistry_Nutrients_PeterPaul_Processed$sampledate)
@@ -66,9 +65,10 @@ class(Lake_ChemistryPhysics_PeterPaul_Processed$sampledate)
 ```{r build plot theme}
 #3
 mytheme <- theme_classic(base_size=12)+
-  theme(plot.title= element_text(size= 20, color = "blue"))
+  theme(plot.title= element_text(size= 12, color = "black", face="bold"))
 theme(axis.text = element_text(color = "black"))
 legend.position = "top"
+theme_set(mytheme)
 
 ```
 
@@ -79,7 +79,18 @@ For numbers 4-7, create ggplot graphs and adjust aesthetics to follow best pract
 
 ```{r plot total P vs PO4}
 #4 
-
+Peterpaul_PO4plot <-
+  ggplot(Lake_Chemistry_Nutrients_PeterPaul_Processed, aes(x = tp_ug, y = po4, color = lakename))+
+  geom_point()+
+  geom_smooth(method = lm, color = "black")+
+  xlim(0,150)+
+  ylim(0,40)+
+  labs(title="Total Phosphorus and Phosphate in Peter Lake and Paul Lake", fontface = "bold", color = "Lake Name")+
+  ylab("Phosphate")+
+  xlab("Total Phosphorus")
+  mytheme
+print(Peterpaul_PO4plot)
+  
 ```
 
 
