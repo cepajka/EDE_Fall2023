@@ -103,35 +103,32 @@ Tip:
 ```{r Create boxplots}
 #5 
 Monthly_temp_plot <-
-  ggplot(Lake_Chemistry_Nutrients_PeterPaul_Processed, aes(x=month, y = temperature_C))+
+  ggplot(Lake_Chemistry_Nutrients_PeterPaul_Processed, aes(x=factor(month, levels = 1:12, labels = month.abb), y = temperature_C))+
   geom_boxplot(aes(color = lakename))+
   labs(title="Monthly Temperature in Peter Lake and Paul Lake", fontface = "bold", color = "Lake Name")+
   ylab("Temperature in Celcius")+
   xlab("Month")+
+  scale_x_discrete(name="Month", drop=FALSE)
   mytheme
 print(Monthly_temp_plot)
-#scale_x_date(limits = month(c("5", "10")), 
-    #date_breaks = "1 month", date_labels = "%b")+
- # axis.text.x = element_text(angle = 55, hjust = 1)
-  #month <- c(6, 7, 8, 9, 10)
-#month.abb[month]
-  
 
 Monthly_Tp_plot <-
-  ggplot(Lake_Chemistry_Nutrients_PeterPaul_Processed, aes(x=month, y = tp_ug))+
+  ggplot(Lake_Chemistry_Nutrients_PeterPaul_Processed, aes(x=factor(month, levels = 1:12, labels = month.abb), y = tp_ug))+
   geom_boxplot(aes(color = lakename))+
   labs(title="Total Phosphorus by Month in Peter Lake and Paul Lake", fontface = "bold", color = "Lake Name")+
   ylab("Total Phosphorus")+
-  xlab("Month")
+  xlab("Month")+
+  scale_x_discrete(name="Month", drop=FALSE)
   mytheme
 print(Monthly_Tp_plot)
 
 Monthly_Tn_plot <-
-  ggplot(Lake_Chemistry_Nutrients_PeterPaul_Processed, aes(x=month, y = tn_ug))+
+  ggplot(Lake_Chemistry_Nutrients_PeterPaul_Processed, aes(x=factor(month, levels = 1:12, labels = month.abb), y = tn_ug))+
   geom_boxplot(aes(color = lakename))+
   labs(title="Total Nitrogen by Month in Peter Lake and Paul Lake", fontface = "bold", color = "Lake Name")+
   ylab("Total Nitrogen")+
-  xlab("Month")
+  xlab("Month")+
+  scale_x_discrete(name="Month", drop=FALSE)
   mytheme
 print(Monthly_Tn_plot)
 
@@ -151,7 +148,15 @@ Question: What do you observe about the variables of interest over seasons and b
 
 ```{r Plot litter}
 #6
-
+Needle_Weight_drymass_plot <-
+  ggplot(subset(Litter_mass_trap_processed, dryMass = "Needles"),
+         aes(x=collectDate, y=dryMass)+
+           geom_boxplot(aes(color = nlcdClass)))
+           labs(title="Needle Mass by Month in Peter Lake and Paul Lake", fontface = "bold", color = "lakename")+
+  ylab("Needle Dry Mass")+
+  xlab("Month")+
+  mytheme
+print(Needle_Weight_drymass_plot)
 
 #7
 
