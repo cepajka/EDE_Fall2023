@@ -33,8 +33,7 @@ This exercise accompanies the lessons in Environmental Data Analytics on Data Vi
 ```{r initialize project}
 #1 
 install.packages("cowplot")
-install.packages("viridis")
-library(tidyverse);library(lubridate);library(here); library(cowplot); library(viridis)
+library(tidyverse);library(lubridate);library(here); library(cowplot)
 here()
 Lake_Chemistry_Nutrients_PeterPaul_Processed <- read.csv(
   file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Processed_KEY/Processed_KEY/NTL-LTER_Lake_Chemistry_Nutrients_PeterPaul_Processed.csv"), stringsAsFactors = TRUE)
@@ -62,14 +61,16 @@ class(Lake_ChemistryPhysics_PeterPaul_Processed$sampledate)
 
 ```{r build plot theme}
 #3
-mytheme <- theme_bw(base_size=12)+
+mytheme <- theme_classic(base_size=12)+
   theme(
     plot.title= element_text(size= 12, color = "darkblue", 
                              face="bold", hjust = 0.5),
     axis.text = element_text(size = 12, color = "black"),
     legend.position = 'bottom',
     legend.background = element_blank(),
-    legend.box.background = element_rect(colour = "black"))
+    legend.box.background = element_rect(colour = "black"),
+    plot.background = element_rect(color = "black"),
+    axis.line = element_line(size = 0.65, color = "black"))
 theme_set(mytheme)
 ```
 
@@ -83,7 +84,7 @@ For numbers 4-7, create ggplot graphs and adjust aesthetics to follow best pract
 Peterpaul_PO4plot <-
   ggplot(Lake_Chemistry_Nutrients_PeterPaul_Processed, aes(x = tp_ug, y = po4, color = lakename))+
   geom_point()+
-  geom_smooth(method = lm, color = "black")+
+  geom_smooth(method = lm, size = .75, color = "black")+
   xlim(0,150)+
   ylim(0,40)+
   labs(title="Total Phosphorus and Phosphate in Peter Lake and Paul Lake", fontface = "bold", color = "Lake Name")+
@@ -137,14 +138,20 @@ Monthly_Tn_plot <-
 print(Monthly_Tn_plot)
 
 combined_plot <-
-  plot_grid(Monthly_temp_plot, Monthly_Tn_plot, Monthly_Tp_plot, ncol=3, align = 'h', axis = 'tb')+
-  theme(axis.text.x = element_text(angle = 45, hjust=1))
+  plot_grid(
+    Monthly_temp_plot +theme(legend.position = "none"),
+    Monthly_Tn_plot+ theme(legend.position = "right"), 
+    Monthly_Tp_plot+ theme(legend.position = "none"),
+    ncol=1, align = 'h', axis = 'tb')
+  theme(
+    axis.text.x = element_text(angle = 45, hjust=1))
 print(combined_plot)
+#could not get the axes to align with the legend, and couldn't get relative heights correct without the graph getting very squished and unreadble.
 ```
 
 Question: What do you observe about the variables of interest over seasons and between lakes? 
 
-> Answer: 
+> Answer: From the number and further distance of outliers, it seems that the variability in Nitrogen and Phosphorus increases from June to August. This could be due to many reasons, including summer storm runoff bringing nitrogen and phosphorus into the lakes in the form of agricultural or lawn fertilizers.The monthly temperatures seem to be relatively close, though Paul lake tends to be slightly warmer in May through Septemeber, though is notably less warm than Peter Lake in October. Because both Peter and Paul lake are dimictic, this is not an unsurprising finding (around October or November, the lakes circulate colder water up, and warmer water down. In this instance, it appears that Paul Lake mixed before Peter Lake did.
 
 6. [Niwot Ridge] Plot a subset of the litter dataset by displaying only the "Needles" functional group. Plot the dry mass of needle litter by date and separate by NLCD class with a color aesthetic. (no need to adjust the name of each land use)
 
@@ -162,8 +169,9 @@ Needle_Weight_drymass_plot <- Litter_mass_trap_processed %>%
        fontface = "bold", color = "NLCD Class")+
   ylab("Needle Dry Mass")+
   xlab("Month")+
-  scale_x_date(name="Month Collected", date_labels ="%m", breaks = unique(Litter_mass_trap_processed$collectDate))
-  #axis.text.x = element_text(angle = 45, hjust=1
+  scale_x_date(name="Date Collected", date_labels ="%m-%d-%Y", breaks = unique(Litter_mass_trap_processed$collectDate))+
+  theme(axis.text = element_text(size = 10))+
+  theme(axis.text.x = element_text(angle = 75, hjust=1))
 print(Needle_Weight_drymass_plot)
 
 #7
@@ -174,13 +182,17 @@ Needlemass_facet <-
            color = nlcdClass)) +
   facet_wrap(vars(nlcdClass), nrow=1)+
   geom_point()+
+  geom_smooth(method = lm, color = "black", size = .75, se=TRUE)+
   labs(title="Needle Mass by Date in Peter Lake and Paul Lake",
        fontface = "bold", color = "NLCD Class")+
   ylab("Needle Dry Mass")+
-  xlab("Collection Date by Year") #separating by month makes the graphs very cluttered & hard to interpret
+  xlab("Collection Date by Year")+ #separating by month makes the graphs very cluttered & hard to interpret
+  scale_x_date(name="Collection Date by Year", date_labels ="%Y")+
+  theme(axis.text = element_text(size = 10))+
+  theme(axis.text.x = element_text(angle = 45, hjust=1))
 print(Needlemass_facet)
 
 ```
 Question: Which of these plots (6 vs. 7) do you think is more effective, and why? 
 
-> Answer: I think graph 7 is more effective, because it displays the trends in each different land class area more clearly, and you can see trends over time for each individual land use. For example, in graph 7, you can easily see that the amount of Needle dry mass steadily decreases from 2017 to 2020, but in graph 6, the multiple colors of dots make it more difficult to intrepret.
+> Answer: I think graph 7 is more effective, because it displays the trends in each different land class area more clearly, and you can see trends over time for each individual land use. For example, in graph 7, you can easily see that the amount of Needle dry mass steadily decreases from 2017 to 2020 by inserting a trendline for each land class, but in graph 6, even though the land use types are distinct by color, a trendline is not able to adequately show trends.
