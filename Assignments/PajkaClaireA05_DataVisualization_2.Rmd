@@ -106,7 +106,6 @@ Peterpaul_PO4plot <-
   ylab("Phosphate")+
   xlab("Total Phosphorus")+
   scale_shape_manual(values = c(15,17))
-  mytheme
 print(Peterpaul_PO4plot)
 ```
 
@@ -117,7 +116,7 @@ Tip:
 * Recall the discussion on factors in the previous section as it may be helpful here. 
 * R has a built-in variable called `month.abb` that returns a list of months;see <https://r-lang.com/month-abb-in-r-with-example>
 
-```{r Create boxplots}
+```{r Create boxplots, fig.height=8}
 #5 
 Monthly_temp_plot <-
   ggplot(Lake_Chemistry_Nutrients_PeterPaul_Processed, 
@@ -126,12 +125,11 @@ Monthly_temp_plot <-
   geom_boxplot(aes(color = lakename))+
   labs(title="Monthly Temperature in Peter Lake and Paul Lake", 
        fontface = "bold", 
-       color = "Lake Name")+
-  ylab("Temperature in Celcius")+
-  xlab("Month")+
-  scale_x_discrete(name="Month", drop=FALSE)+
+       color = "Lake Name",
+       x= "",
+       y= "Temperature in C")+
+  scale_x_discrete(name="", drop=FALSE)+
   theme(axis.text.x = element_text(angle = 45, hjust=1))
-  mytheme
 print(Monthly_temp_plot)
 
 Monthly_Tp_plot <-
@@ -140,12 +138,11 @@ Monthly_Tp_plot <-
              y = tp_ug))+
   geom_boxplot(aes(color = lakename))+
   labs(title="Total Phosphorus by Month in Peter Lake and Paul Lake",
-       fontface = "bold", color = "Lake Name")+
-  ylab("Total Phosphorus")+
-  xlab("Month")+
+       fontface = "bold", color = "Lake Name",
+       x= "Month",
+       y= "Total Phosphorus")+
   scale_x_discrete(name="Month", drop=FALSE)+
   theme(axis.text.x = element_text(angle = 45, hjust=1))
-  mytheme
 print(Monthly_Tp_plot)
 
 Monthly_Tn_plot <-
@@ -154,24 +151,24 @@ Monthly_Tn_plot <-
              y = tn_ug))+
   geom_boxplot(aes(color = lakename))+
   labs(title="Total Nitrogen by Month in Peter Lake and Paul Lake",
-       fontface = "bold", color = "Lake Name")+
-  ylab("Total Nitrogen")+
-  xlab("Month")+
-  scale_x_discrete(name="Month", drop=FALSE)+
+       fontface = "bold", color = "Lake Name",
+       x= "",
+       y= "Total Nitrogen")+
+  scale_x_discrete(name="", drop=FALSE)+
   theme(axis.text.x = element_text(angle = 45, hjust=1))
-  mytheme
 print(Monthly_Tn_plot)
 
 combined_plot <-
   plot_grid(
     Monthly_temp_plot +theme(legend.position = "none"),
-    Monthly_Tn_plot+ theme(legend.position = "right"), 
-    Monthly_Tp_plot+ theme(legend.position = "none"),
-    ncol=1, align = 'h', axis = 'tb')
+    Monthly_Tn_plot+ theme(legend.position = "none"), 
+    Monthly_Tp_plot+ theme(legend.position = "bottom"),
+    ncol=1, nrow=3, align = 'v', axis = 'l', rel_heights = c(1,1,1.4),
   theme(
-    axis.text.x = element_text(angle = 45, hjust=1))
+    axis.text.x = element_text(angle = 45, hjust=1)))
 print(combined_plot) 
-#could not get the axes to align with the legend, and couldn't get relative heights correct without the graph getting very squished and unreadble.
+
+
 ```
 
 Question: What do you observe about the variables of interest over seasons and between lakes? 
