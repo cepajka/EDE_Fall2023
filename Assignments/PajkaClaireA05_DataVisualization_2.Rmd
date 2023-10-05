@@ -33,12 +33,11 @@ This exercise accompanies the lessons in Environmental Data Analytics on Data Vi
 ```{r initialize project}
 #1 
 install.packages("cowplot")
-library(tidyverse);library(lubridate);library(here); library(cowplot)
+install.packages("viridis")
+library(tidyverse);library(lubridate);library(here); library(cowplot); library(viridis)
 here()
 Lake_Chemistry_Nutrients_PeterPaul_Processed <- read.csv(
   file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Processed_KEY/Processed_KEY/NTL-LTER_Lake_Chemistry_Nutrients_PeterPaul_Processed.csv"), stringsAsFactors = TRUE)
-Lake_ChemistryPhysics_PeterPaul_Processed <- read.csv(
-  file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Processed_KEY/Processed_KEY/NTL-LTER_Lake_ChemistryPhysics_PeterPaul_Processed.csv"), stringsAsFactors = TRUE)
 Lake_ChemistryPhysics_PeterPaul_Processed <- read.csv(
   file=here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Processed_KEY/Processed_KEY/NTL-LTER_Lake_Nutrients_PeterPaul_Processed.csv"), stringsAsFactors = TRUE)
 Litter_mass_trap_processed <- read.csv(
@@ -63,11 +62,14 @@ class(Lake_ChemistryPhysics_PeterPaul_Processed$sampledate)
 
 ```{r build plot theme}
 #3
-mytheme <- theme_classic(base_size=12)+
+mytheme <- theme_bw(base_size=12)+
   theme(
-    plot.title= element_text(size= 12, color = "blue", face="bold", hjust = 0.5),
+    plot.title= element_text(size= 12, color = "darkblue", 
+                             face="bold", hjust = 0.5),
     axis.text = element_text(size = 12, color = "black"),
-    legend.position = 'bottom')
+    legend.position = 'bottom',
+    legend.background = element_blank(),
+    legend.box.background = element_rect(colour = "black"))
 theme_set(mytheme)
 ```
 
@@ -86,7 +88,8 @@ Peterpaul_PO4plot <-
   ylim(0,40)+
   labs(title="Total Phosphorus and Phosphate in Peter Lake and Paul Lake", fontface = "bold", color = "Lake Name")+
   ylab("Phosphate")+
-  xlab("Total Phosphorus")
+  xlab("Total Phosphorus")+
+  scale_shape_manual(values = c(15,17))
   mytheme
 print(Peterpaul_PO4plot)
 ```
