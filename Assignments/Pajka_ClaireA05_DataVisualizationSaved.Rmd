@@ -1,6 +1,6 @@
 ---
 title: "Assignment 5: Data Visualization"
-author: "Student Name"
+author: "Claire Pajka"
 date: "Fall 2023"
 output: pdf_document
 geometry: margin=2.54cm
@@ -32,7 +32,7 @@ This exercise accompanies the lessons in Environmental Data Analytics on Data Vi
 
 ```{r initialize project}
 #1 
-
+library(cowplot)
 #2 
 
 ```
