@@ -110,7 +110,7 @@ Create two separate code chunks that create boxplots of the distribution of Ozon
 my_theme <- theme_classic(base_size = 12)
 theme_set(my_theme)
 Monthly_Ozone_plot_2018 <-
-  ggplot(epa_data, Year = "2018", 
+  ggplot(filter(epa_data, Year ==2018), 
          aes(x=factor(Month, levels = 1:12, labels = month.abb),
              y = Ozone))+
   geom_boxplot()+
@@ -126,7 +126,7 @@ print(Monthly_Ozone_plot_2018)
 
 ```{r Ozone_plot_2019, echo=FALSE, warning=FALSE, fig.height=3.5, fig.align="left", fig.cap="Ozone Concentration by Month in 2019"}
 Monthly_Ozone_plot_2019 <-
-  ggplot(epa_data, Year = "2019", 
+  ggplot(filter(epa_data, Year ==2019), 
          aes(x=factor(Month, levels = 1:12, labels = month.abb),
              y = Ozone))+
   geom_boxplot()+
