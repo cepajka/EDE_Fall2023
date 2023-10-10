@@ -51,7 +51,7 @@ library(tidyverse);library(lubridate);library(here);library(knitr)
 #epa_data <- read.csv(
  # here("Data","Processed_KEY","EPAair_O3_PM25_NC1819_Processed.csv"),
   #stringsAsFactors = TRUE) %>% 
-  #mutate(Date = ymd(Date))
+ # mutate(Date = ymd(Date))
 
 epa_data <- read.csv(
  here("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/Data/Processed_KEY/Processed_KEY/EPAair_O3_PM25_NC1819_Processed.csv"),
@@ -114,10 +114,9 @@ Monthly_Ozone_plot_2018 <-
          aes(x=factor(Month, levels = 1:12, labels = month.abb),
              y = Ozone))+
   geom_boxplot()+
-  labs(title="2018 Ozone Distribution by Month",
-       fontface = "bold",
-       x= "Month",
-       y= "Concentration ($\\mu g/m^3$)")+
+  xlab("Month")+
+  ylab(expression(paste("Concentration(", mu, "g/m"^"3", ")")))+
+  ggtitle("2018 Ozone Distribution by Month")+
   scale_x_discrete(name="Month", drop=FALSE)+
   theme(axis.text.x = element_text(angle = 45, hjust=1))+
   theme(plot.title = element_text(hjust = 0.5))
@@ -131,10 +130,13 @@ Monthly_Ozone_plot_2019 <-
          aes(x=factor(Month, levels = 1:12, labels = month.abb),
              y = Ozone))+
   geom_boxplot()+
-  labs(title="2019 Ozone Distribution by Month",
-       fontface = "bold",
-       x= "Month",
-       y= "Concentration ($\\mu g/m^3$))")+
+  xlab("Month")+
+  ylab(expression(paste("Concentration(", mu, "g/m"^"3", ")")))+
+  ggtitle("2019 Ozone Distribution by Month")+
+  #labs(title="2019 Ozone Distribution by Month",
+   #    fontface = "bold",
+    #   x= "Month",
+     #  y= "Concentration ($\\mu g/m^3$))")+
   scale_x_discrete(name="Month", drop=FALSE)+
   theme(axis.text.x = element_text(angle = 45, hjust=1))+
   theme(plot.title = element_text(hjust = 0.5))
