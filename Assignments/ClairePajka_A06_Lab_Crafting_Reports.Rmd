@@ -84,8 +84,6 @@ summary_PM25 <- epa_data %>%
   summarize(mean_PM2.5 = mean(PM2.5)) %>% 
   arrange(mean_PM2.5)
 
-knitr::kable(summary_PM25,caption = "Mean Ozone", col.names= c("County", "$\\mu g/m^3$"))
-
 #Compute mean ozone concentration for each county, sorted by value
 summary_Ozone <- epa_data %>% 
   drop_na(Ozone) %>% 
@@ -94,9 +92,11 @@ summary_Ozone <- epa_data %>%
     mean_Ozone = mean(Ozone)) %>% 
   arrange(mean_Ozone)
 
-knitr::kable(summary_PM25,caption = "Mean Particulates (2.5mm)", col.names= c("County", "$\\mu g/m^3$"))
-
 #Use the `kable` function to produce the 2 tables in markdown format
+
+knitr::kable(summary_PM25,caption = "Mean Ozone", col.names= c("County", "$\\mu g/m^3$"))
+
+knitr::kable(summary_PM25,caption = "Mean Particulates (2.5mm)", col.names= c("County", "$\\mu g/m^3$"))
 
 ```
 
@@ -117,7 +117,7 @@ Monthly_Ozone_plot_2018 <-
   labs(title="2018 Ozone Distribution by Month",
        fontface = "bold",
        x= "Month",
-       y= "Ozone")+
+       y= "Concentration ($\\mu g/m^3$)")+
   scale_x_discrete(name="Month", drop=FALSE)+
   theme(axis.text.x = element_text(angle = 45, hjust=1))+
   theme(plot.title = element_text(hjust = 0.5))
@@ -134,7 +134,7 @@ Monthly_Ozone_plot_2019 <-
   labs(title="2019 Ozone Distribution by Month",
        fontface = "bold",
        x= "Month",
-       y= "Ozone")+
+       y= "Concentration ($\\mu g/m^3$))")+
   scale_x_discrete(name="Month", drop=FALSE)+
   theme(axis.text.x = element_text(angle = 45, hjust=1))+
   theme(plot.title = element_text(hjust = 0.5))
@@ -148,4 +148,4 @@ print(Monthly_Ozone_plot_2019)
 Add a table of contents to your document and knit to a PDF. Submit your PDF to Sakai, but also be sure to commit and push your Rmd file used to create this knit document to GitHub. In the section below, add a link to your GitHub repository. 
 
 ## Git Repository
-
+https://github.com/cepajka/EDE_Fall2023
