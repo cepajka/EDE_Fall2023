@@ -28,13 +28,19 @@ This exercise accompanies the lessons in Environmental Data Analytics on general
 ```{r setup2}
 #1
 install.packages("agricolae")
-library(tidyverse);library(lubridate);library(here); library(agricolae)
+library(tidyverse);library(lubridate);library(here); library(agricolae); library(dplyr)
 here()
 chemphysics_raw <- read.csv(
   here("Data", "Raw", "NTL-LTER_Lake_ChemistryPhysics_Raw.csv"),
-  stringsAsFactors = TRUE) %>%
-  mutate(sampledate = mdy(Date))
-print(chemphysics_raw)
+  stringsAsFactors = TRUE)
+
+chemphysics_raw$sampledate <-
+  mdy(chemphysics_raw$sampledate)
+View(chemphysics_raw)
+mutate(sampledate = as.Date(chemphysics_raw$sampledate, format = "%m-%d-%Y"),  # Ensure sampledate is in the correct format
+         Month = month(sampledate),
+        Year = year(sampledate))
+View(chemphysics_raw)
 
 mytheme <- theme_classic(base_size=12)+
   theme(
@@ -70,7 +76,15 @@ Ha: Lake temperatures vary by depth across the study lakes.
 
 ```{r scatterplot}
 #4
-
+subsetdepth_temp <- chemphysics_raw %>%
+  mutate(sampledate = as.Date(sampledate, format = "%m- %d - %Y"),
+         Month = month(sampledate),
+         Year = year(sampledate))%>%
+  filter(Month== 7) %>%
+  select(lakename, year4, daynum, depth, temperature_C) %>%
+  na.omit()
+  
+view(subsetdepth_temp)
 
 #5
 
