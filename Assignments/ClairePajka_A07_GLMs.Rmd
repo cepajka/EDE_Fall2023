@@ -110,14 +110,17 @@ print(Depth_temp_plot)
 6. Interpret the figure. What does it suggest with regards to the response of temperature to depth? Do the distribution of points suggest about anything about the linearity of this trend?
 
 > Answer: 
-
+The figure suggests that 
+It shows that on average, Crampton Lake ha a higher temperature than Tuesday or Ward Lake at the same depth. 
 
 7. Perform a linear regression to test the relationship and display the results
 
 ```{r linear.regression}
 #7
-
-
+depth_temp_regression <-
+  lm(subsetdepth_temp$depth ~ 
+       subsetdepth_temp$temperature_C)
+summary(depth_temp_regression)
 ```
 
 
