@@ -33,28 +33,28 @@ here()
 chemphysics_raw <- read.csv(
   here("Data", "Raw", "NTL-LTER_Lake_ChemistryPhysics_Raw.csv"),
   stringsAsFactors = TRUE)
-
+View(chemphysics_raw)
 chemphysics_raw$sampledate <-
   mdy(chemphysics_raw$sampledate)
-View(chemphysics_raw)
-mutate(sampledate = as.Date(chemphysics_raw$sampledate, format = "%m-%d-%Y"),  # Ensure sampledate is in the correct format
-         Month = month(sampledate),
-        Year = year(sampledate))
-View(chemphysics_raw)
 
+#View(chemphysics_raw)
+#mutate(sampledate = as.Date(chemphysics_raw$sampledate, format = "%m-%d-%Y"),  # Ensure sampledate is in the correct format
+         #Month = month(sampledate),
+        #Year = year(sampledate))
+#View(chemphysics_raw)
+
+#2
 mytheme <- theme_classic(base_size=12)+
   theme(
     plot.title= element_text(size= 12, color = "darkblue", 
                              face="bold", hjust = 0.5),
     axis.text = element_text(size = 12, color = "black"),
-    legend.position = 'bottom',
+    legend.position = 'right',
     legend.background = element_blank(),
     legend.box.background = element_rect(colour = "black"),
     plot.background = element_rect(color = "black"),
     axis.line = element_line(size = 0.65, color = "black"))
 theme_set(mytheme)
-#2
-
 
 ```
 
@@ -77,17 +77,32 @@ Ha: Lake temperatures vary by depth across the study lakes.
 ```{r scatterplot}
 #4
 subsetdepth_temp <- chemphysics_raw %>%
-  mutate(sampledate = as.Date(sampledate, format = "%m- %d - %Y"),
-         Month = month(sampledate),
-         Year = year(sampledate))%>%
-  filter(Month== 7) %>%
+  #mutate(sampledate = as.Date(sampledate, format = "%m- %d - %Y"),
+         #Month = month(sampledate),
+         #Year = year(sampledate))%>%
+  filter(month(chemphysics_raw$sampledate)== 7) %>%
   select(lakename, year4, daynum, depth, temperature_C) %>%
   na.omit()
-  
-view(subsetdepth_temp)
+  view(subsetdepth_temp)
 
 #5
-
+Depth_temp_plot <-
+  ggplot(subsetdepth_temp,
+         aes(
+           y=temperature_C,
+           x= depth,
+           color = lakename))+
+  geom_point()+
+  mytheme+
+  geom_smooth(method = lm, linewidth = .75, color = "black")+
+  xlim(0,20)+
+  ylim(0, 35)+
+  labs(title= "July Temperature Difference by Depth", 
+       fontface = "bold",
+       color = "Lake Name")+
+  xlab("Depth")+
+  ylab("Temperature in Celcius")
+print(Depth_temp_plot)
 
 ```
 
