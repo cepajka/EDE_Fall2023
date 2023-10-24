@@ -110,8 +110,8 @@ print(Depth_temp_plot)
 6. Interpret the figure. What does it suggest with regards to the response of temperature to depth? Do the distribution of points suggest about anything about the linearity of this trend?
 
 > Answer: 
-The figure suggests that 
-It shows that on average, Crampton Lake ha a higher temperature than Tuesday or Ward Lake at the same depth. 
+Generally, the graph shows that as depth increases, the temperature in degrees Celcius decreases. The data appears to decrease in a nonlinear manner (as demonstrated by its difference from the trend line), similar to a logarithmic curve. This suggests that the relationship between temperature in Celcius and depth is nonlinear.
+
 
 7. Perform a linear regression to test the relationship and display the results
 
@@ -133,7 +133,7 @@ print(depth_temp_regression_plot)
 8. Interpret your model results in words. Include how much of the variability in temperature is explained by changes in depth, the degrees of freedom on which this finding is based, and the statistical significance of the result. Also mention how much temperature is predicted to change for every 1m change in depth. 
 
 > Answer:
-The r^2 explains how much variability is explained by depth, so the r^2 value of 0.7387 means that 73.87% of the variability is accounted for by depth. The degrees of freedom are 9724. p value is less than 2.2e-16.
+The r^2 explains how much variability is explained by depth, so the r^2 value of 0.7387 means that 73.87% of the variability is accounted for by depth. The degrees of freedom are 9726. The p value is less than 2.2e-16, which is less than 0.05, so we would call this result statistically significant.
 
 ---
 
@@ -153,14 +153,14 @@ step(TempbyAll.regression)
 print(TempbyAll.regression)
 #10
 Temp_by_depthmultiple <- lm(data = subsetdepth_temp, temperature_C ~ year4 + daynum + depth)
-print(Temp_by_depthmultiple)
+summary(Temp_by_depthmultiple)
 
 ```
 
 11. What is the final set of explanatory variables that the AIC method suggests we use to predict temperature in our multiple regression? How much of the observed variance does this model explain? Is this an improvement over the model using only depth as the explanatory variable?
 
 > Answer: The final set of variables includes year4, daynum, and depth. 
-
+For the multiple regression with the variables suggested by the AIC method, the multiple r squared is 0.7412 (adjusted 0.7411), meaning that 74.12% of the variance is accounted for by the model. The single linear regression of only depth and temperature provided an r squared of 0.7387, which means that the adding in more explanatory variables very slightly increased the amount of the observed variance that the model explains.
 
 
 ---
