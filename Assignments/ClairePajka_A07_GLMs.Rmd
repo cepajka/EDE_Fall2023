@@ -121,13 +121,19 @@ depth_temp_regression <-
   lm(subsetdepth_temp$depth ~ 
        subsetdepth_temp$temperature_C)
 summary(depth_temp_regression)
+
+depth_temp_regression_plot <-
+  ggplot(subsetdepth_temp, aes(x = depth, y = temperature_C))+
+  ylim(0,35)+
+  geom_point()
+print(depth_temp_regression_plot)
 ```
 
 
 8. Interpret your model results in words. Include how much of the variability in temperature is explained by changes in depth, the degrees of freedom on which this finding is based, and the statistical significance of the result. Also mention how much temperature is predicted to change for every 1m change in depth. 
 
 > Answer:
-
+The r^2 explains how much variability is explained by depth, so the r^2 value of 0.7387 means that 73.87% of the variability is accounted for by depth. The degrees of freedom are 9724. p value is less than 2.2e-16.
 
 ---
 
@@ -141,9 +147,9 @@ Let's tackle a similar question from a different approach. Here, we want to expl
 
 ```{r temperature.model}
 #9
-
-
-
+TempbyAll.regression <- lm(data = subsetdepth_temp, temperature_C ~ year4 + daynum + depth)
+TempbyAll.regression
+summary(TempbyAll.regression)
 #10
 
 
