@@ -100,7 +100,7 @@ Depth_temp_plot <-
   labs(title= "July Temperature Difference by Depth", 
        fontface = "bold",
        color = "Lake Name")+
-  xlab("Depth")+
+  xlab("Depth in meters")+
   ylab("Temperature in Celcius")
 print(Depth_temp_plot)
 
@@ -110,7 +110,7 @@ print(Depth_temp_plot)
 6. Interpret the figure. What does it suggest with regards to the response of temperature to depth? Do the distribution of points suggest about anything about the linearity of this trend?
 
 > Answer: 
-Generally, the graph shows that as depth increases, the temperature in degrees Celcius decreases. The data appears to decrease in a nonlinear manner (as demonstrated by its difference from the trend line), similar to a logarithmic curve. This suggests that the relationship between temperature in Celcius and depth is nonlinear.
+Generally, the graph shows that as depth increases, the temperature in degrees Celcius decreases. The data appears to decrease in a nonlinear manner (as demonstrated by its difference from the trend line), similar to a logarithmic curve. This suggests that the relationship between temperature in Celcius and depth is nonlinear / the response of temperature by depth is nonlinear.
 
 
 7. Perform a linear regression to test the relationship and display the results
@@ -125,7 +125,11 @@ summary(depth_temp_regression)
 depth_temp_regression_plot <-
   ggplot(subsetdepth_temp, aes(x = depth, y = temperature_C))+
   ylim(0,35)+
-  geom_point()
+  geom_point()+
+   labs(title= "Regression Curve of Temperature by Depth", 
+       fontface = "bold")+
+  xlab("Depth in meters")+
+  ylab("Temperature in Celcius")
 print(depth_temp_regression_plot)
 ```
 
@@ -224,7 +228,7 @@ Temp.groups
 
 17. If we were just looking at Peter Lake and Paul Lake. What's another test we might explore to see whether they have distinct mean temperatures? 
 
->Answer: 
+>Answer: We could use a two sample t-test in order to see if Peter and Paul Lake have different means.Two sample t-tests are used to compare the means of two independent populations and test if the difference between them is statistically significant. 
 
 
 
