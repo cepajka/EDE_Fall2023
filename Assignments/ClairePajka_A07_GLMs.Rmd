@@ -27,7 +27,7 @@ This exercise accompanies the lessons in Environmental Data Analytics on general
 
 ```{r setup2}
 #1
-install.packages("agricolae")
+#install.packages("agricolae")
 library(tidyverse);library(lubridate);library(here); library(agricolae); library(dplyr)
 here()
 chemphysics_raw <- read.csv(
@@ -36,12 +36,6 @@ chemphysics_raw <- read.csv(
 View(chemphysics_raw)
 chemphysics_raw$sampledate <-
   mdy(chemphysics_raw$sampledate)
-
-#View(chemphysics_raw)
-#mutate(sampledate = as.Date(chemphysics_raw$sampledate, format = "%m-%d-%Y"),  # Ensure sampledate is in the correct format
-         #Month = month(sampledate),
-        #Year = year(sampledate))
-#View(chemphysics_raw)
 
 #2
 mytheme <- theme_classic(base_size=12)+
@@ -97,10 +91,10 @@ Depth_temp_plot <-
   geom_smooth(method = lm, linewidth = .75, color = "black")+
   xlim(0,20)+
   ylim(0, 35)+
-  labs(title= "July Temperature Difference by Depth", 
+  labs(title= "Lake Temperature Difference by Depth in July", 
        fontface = "bold",
        color = "Lake Name")+
-  xlab("Depth in meters")+
+  xlab("Depth in Meters")+
   ylab("Temperature in Celcius")
 print(Depth_temp_plot)
 
@@ -126,9 +120,9 @@ depth_temp_regression_plot <-
   ggplot(subsetdepth_temp, aes(x = depth, y = temperature_C))+
   ylim(0,35)+
   geom_point()+
-   labs(title= "Regression Curve of Temperature by Depth", 
+   labs(title= "Regression Curve of July Temperature by Depth", 
        fontface = "bold")+
-  xlab("Depth in meters")+
+  xlab("Depth in Meters")+
   ylab("Temperature in Celcius")
 print(depth_temp_regression_plot)
 ```
@@ -137,7 +131,7 @@ print(depth_temp_regression_plot)
 8. Interpret your model results in words. Include how much of the variability in temperature is explained by changes in depth, the degrees of freedom on which this finding is based, and the statistical significance of the result. Also mention how much temperature is predicted to change for every 1m change in depth. 
 
 > Answer:
-The r^2 explains how much variability is explained by depth, so the r^2 value of 0.7387 means that 73.87% of the variability is accounted for by depth. The degrees of freedom are 9726. The p value is less than 2.2e-16, which is less than 0.05, so we would call this result statistically significant.
+The r^2 explains how much variability is explained by depth, so the r^2 value of 0.7387 means that 73.87% of the variability is accounted for by depth. The degrees of freedom are 9726. The p value is less than 2.2e-16, which is less than 0.05, so we would call this result statistically significant.For every 1 meter increase in depth (going lower into the water), the temperature is going to decrease by 0.379578 degrees, and every one meter decrease in depth (going closer to the surface of the water) the temperature will increase by 0.379578 degrees Celcius.
 
 ---
 
@@ -176,9 +170,11 @@ For the multiple regression with the variables suggested by the AIC method, the 
 #12
 July_temp_anova <- aov(data = subsetdepth_temp, temperature_C ~ lakename)
 summary(July_temp_anova)
+plot(July_temp_anova)
 
 July_temp_anova2 <- lm(data = subsetdepth_temp, temperature_C ~ lakename)
 summary(July_temp_anova2)
+plot(July_temp_anova2)
 ```
 
 13. Is there a significant difference in mean temperature among the lakes? Report your findings. 
