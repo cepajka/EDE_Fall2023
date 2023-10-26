@@ -84,8 +84,7 @@ Depth_temp_plot <-
   ggplot(subsetdepth_temp,
          aes(
            y=temperature_C,
-           x= depth,
-           color = lakename))+
+           x= depth))+
   geom_point()+
   mytheme+
   geom_smooth(method = lm, linewidth = .75, color = "black")+
@@ -195,7 +194,7 @@ Depth_temp_plot2 <-
            color = lakename))+
   geom_point(alpha= 0.5)+
   mytheme+
-  geom_smooth(method = lm, se= FALSE, linewidth = .75, color = "black")+
+  geom_smooth(method = lm, se= FALSE)+
   xlim(0,20)+
   ylim(0, 35)+
   labs(title= "July Temperature Difference by Depth", 
