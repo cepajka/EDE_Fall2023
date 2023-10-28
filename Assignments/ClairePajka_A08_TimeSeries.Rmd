@@ -91,13 +91,22 @@ GaringerOzone <- rbind(ozone2010, ozone2011, ozone2012, ozone2013, ozone2014, oz
 
 ```{r}
 # 3
-
+#GaringerOzone$Date <- as.Date(GaringerOzone$Date, format = "%m/%d/%Y")
+GaringerOzone$Date <- mdy(GaringerOzone$Date)
+class(GaringerOzone$Date) #checking that this is now a date class
 # 4
+subsetGaringerOzone <- GaringerOzone %>%
+  select(Date, Daily.Max.8.hour.Ozone.Concentration, DAILY_AQI_VALUE)
+view(subsetGaringerOzone)
 
 # 5
+subsetGaringerOzone$Date[subsetGaringerOzone$Date == ""] <- NA 
+
+Garinger_sequence <- seq(as.Date("2010-01-01"), as.Date("2019-12-31"), by= "days")
+Days <- 
 
 # 6
-
+GaringerOzone_combined <- left_join()
 
 ```
 
@@ -107,7 +116,19 @@ GaringerOzone <- rbind(ozone2010, ozone2011, ozone2012, ozone2013, ozone2014, oz
 
 ```{r}
 #7
-
+Ozone_time_plot <-
+  ggplot(subsetGaringerOzone,#or maybe Days this time?),
+         aes(
+           y=Daily.Max.8.hour.Ozone.Concentration,
+           x= Date))+
+  geom_line()+
+  mytheme+
+  geom_smooth(method = lm, linewidth = .75, color = "black")+
+  labs(title= "Ozone Concentration Over Time from 2010-2019", 
+       fontface = "bold")+
+  xlab("Sequential Date")+
+  ylab("Ozone Concentration in ppm")
+print(Ozone_time_plot)
 ```
 
 >Answer:
