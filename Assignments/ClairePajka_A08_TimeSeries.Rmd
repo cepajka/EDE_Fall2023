@@ -119,21 +119,22 @@ dim(GaringerOzone)
 ```{r}
 #7
 Ozone_time_plot <-
-  ggplot(subsetGaringerOzone,#or maybe Days this time?),
+  ggplot(GaringerOzone,
          aes(
            y=Daily.Max.8.hour.Ozone.Concentration,
            x= Date))+
   geom_line()+
   mytheme+
-  geom_smooth(method = lm, linewidth = .75, color = "black")+
+  geom_smooth(method = lm, linewidth = .75, color = "lightgreen")+
   labs(title= "Ozone Concentration Over Time from 2010-2019", 
        fontface = "bold")+
   xlab("Sequential Date")+
-  ylab("Ozone Concentration in ppm")
+  ylab("Daily Ozone Concentration in ppm")
 print(Ozone_time_plot)
 ```
 
->Answer:
+>Answer: 
+The trend line shows a slight decrease in daily ozone concentrations from 2010 to 2019. Though there are natural fluctuations due to (xxxx i don't remember what it is but it has a name!!!0.) But if we look at the smoothed trend line in light green, we can see the daily ozone concentration decreases from 2010 to 2019.
 
 ## Time Series Analysis
 
@@ -143,6 +144,11 @@ Study question: Have ozone concentrations changed over the 2010s at this station
 
 ```{r}
 #8
+GaringerOzone_clean <- 
+  GaringerOzone %>%
+  mutate(Daily.Max.8.hour.Ozone.Concentration = zoo::na.approx(Daily.Max.8.hour.Ozone.Concentration))
+summary(GaringerOzone$Daily.Max.8.hour.Ozone.Concentration)
+summary (GaringerOzone_clean$Daily.Max.8.hour.Ozone.Concentration)
 
 ```
 
