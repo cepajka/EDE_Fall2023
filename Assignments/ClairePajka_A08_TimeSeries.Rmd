@@ -186,6 +186,7 @@ GaringerOzone.daily.ts
 f_month <- month(first(GaringerOzone.monthly$Date))
 f_year <- year(first(GaringerOzone.monthly$Date))
 GaringerOzone.monthly.ts <- ts(GaringerOzone.monthly$MonthlyAverage, frequency=12,  start=c(f_year, f_month))
+GaringerOzone.monthly.ts
 
 ```
 
@@ -279,7 +280,7 @@ print(monthly_ozone_plot)
 
 14. To accompany your graph, summarize your results in context of the research question. Include output from the statistical test in parentheses at the end of your sentence. Feel free to use multiple sentences in your interpretation.
 
-> Answer: 
+> Answer: The data suggests that average ozone concentrations are more elevated in warmer summer months than in cooler winter months. This seasonal pattern seems to repeat every year, with December or January of every year from 2010 to 2019 representing the lowest monthly average (in ppm) for each respective year. 
 
 15. Subtract the seasonal component from the `GaringerOzone.monthly.ts`. Hint: Look at how we extracted the series components for the EnoDischarge on the lesson Rmd file.
 
@@ -287,19 +288,19 @@ print(monthly_ozone_plot)
 
 ```{r}
 #15
-seasonal_monthly_component <- GaringerOzone.monthly.ts$seasonal
-ozone_no_seasonal <- GaringerOzone.monthly - seasonal_monthly_component
+seasonal_monthly_component <- monthlyozone_decomp$time.series [,1]
+ozone_no_seasonal <- monthlyozone_decomp$time.series [,2:3]
+view(ozone_no_seasonal)
 
-ozone_no_seasonal = stlGaringerOzone.monthly$time.series[,2] + stlGaringerOzone.monthly$time.series[,3]
+#not sure I need anything below this
+#f_month <- month(first(GaringerOzone.monthly$Date))
+#f_year <- year(first(GaringerOzone.monthly$Date))
+#ozone_no_seasonal.ts <- ts(ozone_no_seasonal$MonthlyAverag, frequency=12, start=c(f_year, f_month))
 
-
-f_month <- month(first(GaringerOzone.monthly$Date))
-f_year <- year(first(GaringerOzone.monthly$Date))
-ozone_no_seasonal.ts <- ts(GaringerOzone.monthly$Daily.Max.8.hour.Ozone.Concentration, start=c(f_year, f_month, frequency=12))
 
 #16
 
-MK_ozone_no_seasonal <- Kendall::MannKendall(ozone_no_seasonal.ts)
+MK_ozone_no_seasonal <- Kendall::MannKendall(ozone_no_seasonal)
 MK_ozone_no_seasonal
 summary(MK_ozone_no_seasonal)
 
@@ -307,3 +308,9 @@ summary(MK_ozone_no_seasonal)
 ```
 
 > Answer: 
+The non-seasonal Mann Kendall: 
+Score =  -16300 , Var(Score) = 1545533, denominator =  28680
+tau = -0.568, 2-sided pvalue =< 2.22e-16
+Seasonal Mann Kendall: 
+Score =  -77 , Var(Score) = 1499, denominator =  539.4972
+tau = -0.143, 2-sided pvalue =0.046724
