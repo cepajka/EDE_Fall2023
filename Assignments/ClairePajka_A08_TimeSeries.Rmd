@@ -164,32 +164,12 @@ GaringerOzone.monthly <-
   mutate(Year = year(Date)) %>%
   mutate(Month = month(Date)) %>%
   group_by(Year, Month) %>%
-  summarise(Daily.Max.8.hour.Ozone.Concentration = mean(Daily.Max.8.hour.Ozone.Concentration$Month)) %>%
-  mutate(Date = as.Date(paste(Year, Month, "01"), format = "%Y/%B/%d")) %>%
-  mutate(Average = mean(Daily.Max.8.hour.Ozone.Concentration))
+  summarise(MonthlyAverage = mean(Daily.Max.8.hour.Ozone.Concentration))
+  
+GaringerOzone.monthly <- GaringerOzone.monthly %>%
+  mutate(Date= make_date(Year, Month, 1))
   view(GaringerOzone.monthly)
   
-  GaringerOzone.monthly <-
-  GaringerOzone_clean %>%
-  mutate(Year = year(Date)) %>%
-  mutate(Month = month(Date)) %>%
-  group_by(Year, Month) %>%
-  summarise(mean = mean(Daily.Max.8.hour.Ozone.Concentration) %>%
-  mutate(Date = as.Date(paste(Year, Month, "01"), format = "%Y/%B/%d")) %>%
-  mutate(Average = mean(Daily.Max.8.hour.Ozone.Concentration))
-  view(GaringerOzone.monthly)
-  
- 
- GaringerOzone.monthly <-
-  GaringerOzone_clean %>%
-  mutate(Year = year(Date)) %>%
-  mutate(Month = month(Date)) %>%
-  group_by(Year, Month) %>%
-   summarise(Daily.Max.8.hour.Ozone.Concentration = mean(Daily.Max.8.hour.Ozone.Concentration)) %>%
-  mutate(Date = as.Date(paste(Year, Month, "01"), format = "%Y %B %d"))%>%
-   mutate(Date = Month, Year) %>%
-view(GaringerOzone.monthly)
-
 ```
 
 
@@ -205,7 +185,7 @@ GaringerOzone.daily.ts
 
 f_month <- month(first(GaringerOzone.monthly$Date))
 f_year <- year(first(GaringerOzone.monthly$Date))
-GaringerOzone.monthly.ts <- ts(GaringerOzone.monthly$Daily.Max.8.hour.Ozone.Concentration, start=c(f_year, f_month, frequency=12))
+GaringerOzone.monthly.ts <- ts(GaringerOzone.monthly$MonthlyAverage, frequency=12,  start=c(f_year, f_month))
 
 ```
 
@@ -244,7 +224,7 @@ Monthlyozone_Components <- as.data.frame(monthlyozone_decomp$time.series [,1:3])
 plot(Monthlyozone_Components)
 
 Monthlyozone_Components <- mutate(Monthlyozone_Components,
-                                Observed = GaringerOzone.monthly$Daily.Max.8.hour.Ozone.Concentration,
+                                Observed = GaringerOzone.monthly$MonthlyAverage,
                                 Date = GaringerOzone.monthly$Date)
 
 Monthlyozone_Components_trendplot <-
@@ -252,14 +232,14 @@ Monthlyozone_Components_trendplot <-
   geom_line(aes(y= Observed, x = Date), size = 0.25)+
   geom_line(aes(y = trend, x = Date), color = "lightgreen")+
   ylab("Ozone Concentration")
-plot(Monthlyozone_Components_plot)
+plot(Monthlyozone_Components_trendplot)
 
 Monthlyozone_Components_seasonalplot <-
   ggplot(Monthlyozone_Components) +
   geom_line(aes(y= Observed, x = Date), size = 0.25)+
   geom_line(aes(y = seasonal, x = Date), color = "lightgreen")+
   ylab("Ozone Concentration")
-plot(Monthlyozone_Components_seaonsalplot)
+plot(Monthlyozone_Components_seasonalplot)
 ```
 
 
@@ -283,16 +263,16 @@ summary(monthly_ozone_SMK)
 monthly_ozone_plot <-
   ggplot(GaringerOzone.monthly,
          aes(
-           y=Daily.Max.8.hour.Ozone.Concentration,
+           y=MonthlyAverage,
            x= Date))+
   geom_point()+
-  geom_line()
-  mytheme+
-  geom_smooth(method = lm, linewidth = .75, color = "black")+
+  geom_line()+
+  #geom_smooth(method = lm, linewidth = .75, color = "black")+
   labs(title= "Monthly Average Ozone Concentrations Between 2010-2019", 
        fontface = "bold")+
   xlab("Date")+
-  ylab("Monthly Average Ozone Concentration in ppm")
+  ylab("Monthly Average Ozone Concentration (ppm)")+
+    mytheme
 print(monthly_ozone_plot)
 
 ```
