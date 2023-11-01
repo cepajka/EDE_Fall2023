@@ -164,12 +164,32 @@ GaringerOzone.monthly <-
   mutate(Year = year(Date)) %>%
   mutate(Month = month(Date)) %>%
   group_by(Year, Month) %>%
-  summarise(Daily.Max.8.hour.Ozone.Concentration = mean(Daily.Max.8.hour.Ozone.Concentration)) %>%
-  mutate(Date_monthyear = ) %>%
-  mutate(Average = sum(Daily.Max.8.hour.Ozone.Concentration))
+  summarise(Daily.Max.8.hour.Ozone.Concentration = mean(Daily.Max.8.hour.Ozone.Concentration$Month)) %>%
+  mutate(Date = as.Date(paste(Year, Month, "01"), format = "%Y/%B/%d")) %>%
+  mutate(Average = mean(Daily.Max.8.hour.Ozone.Concentration))
+  view(GaringerOzone.monthly)
+  
+  GaringerOzone.monthly <-
+  GaringerOzone_clean %>%
+  mutate(Year = year(Date)) %>%
+  mutate(Month = month(Date)) %>%
+  group_by(Year, Month) %>%
+  summarise(mean = mean(Daily.Max.8.hour.Ozone.Concentration) %>%
+  mutate(Date = as.Date(paste(Year, Month, "01"), format = "%Y/%B/%d")) %>%
+  mutate(Average = mean(Daily.Max.8.hour.Ozone.Concentration))
+  view(GaringerOzone.monthly)
+  
+ 
+ GaringerOzone.monthly <-
+  GaringerOzone_clean %>%
+  mutate(Year = year(Date)) %>%
+  mutate(Month = month(Date)) %>%
+  group_by(Year, Month) %>%
+   summarise(Daily.Max.8.hour.Ozone.Concentration = mean(Daily.Max.8.hour.Ozone.Concentration)) %>%
+  mutate(Date = as.Date(paste(Year, Month, "01"), format = "%Y %B %d"))%>%
+   mutate(Date = Month, Year) %>%
 view(GaringerOzone.monthly)
-  
-  
+
 ```
 
 
