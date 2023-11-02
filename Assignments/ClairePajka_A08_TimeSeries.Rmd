@@ -307,24 +307,28 @@ print(monthly_ozone_plot)
 
 ```{r}
 #15
-seasonal_monthly_component <- monthlyozone_decomp$time.series [,1]
-ozone_no_seasonal <- monthlyozone_decomp$time.series [,2:3]
+ozone_no_seasonal1 <- monthlyozone_decomp$time.series [,2:3]
 #print(ozone_no_seasonal)
 
+ozone_no_seasonal2 <- Monthlyozone_Components$trend + Monthlyozone_Components$remainder
+f_month <- month(first(GaringerOzone.monthly$Date))
+f_year <- year(first(GaringerOzone.monthly$Date))
+ozone_no_seasonal2.ts <- ts(ozone_no_seasonal1, frequency=12,  start=c(f_year, f_month))
 
 #16
 
-MK_ozone_no_seasonal <- Kendall::MannKendall(ozone_no_seasonal)
-MK_ozone_no_seasonal
-summary(MK_ozone_no_seasonal)
+MK_ozone_no_seasonal1 <- Kendall::MannKendall(ozone_no_seasonal1)
+MK_ozone_no_seasonal2 <- Kendall::MannKendall(ozone_no_seasonal2)
+summary(MK_ozone_no_seasonal1)
+summary(MK_ozone_no_seasonal2)
 
 
 ```
 
 > Answer: 
 The non-seasonal Mann Kendall: 
-Score =  -16300 , Var(Score) = 1545533, denominator =  28680
-tau = -0.568, 2-sided pvalue =< 2.22e-16
+Score =  -1179 , Var(Score) = 194365.7, denominator =  7139.5
+tau = -0.165, 2-sided pvalue =0.0075402
 Seasonal Mann Kendall: 
 Score =  -77 , Var(Score) = 1499, denominator =  539.4972
 tau = -0.143, 2-sided pvalue =0.046724
