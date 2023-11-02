@@ -221,6 +221,7 @@ Dailyozone_Components_trendplot <-
   ggplot(Dailyozone_Components) +
   geom_line(aes(y= Observed, x = Date), size = 0.25)+
   geom_line(aes(y = trend, x = Date), color = "lightgreen")+
+  labs(title="Daily Ozone Components-Trend Plot")+
   ylab("Ozone Concentration")
 plot(Dailyozone_Components_trendplot)
 
@@ -228,6 +229,7 @@ Dailyozone_Components_seasonalplot <-
   ggplot(Dailyozone_Components) +
   geom_line(aes(y= Observed, x = Date), size = 0.25)+
   geom_line(aes(y = seasonal, x = Date), color = "lightgreen")+
+  labs(title="Daily Ozone Components-Seasonal Plot")+
   ylab("Ozone Concentration")
 plot(Dailyozone_Components_seasonalplot)
 
