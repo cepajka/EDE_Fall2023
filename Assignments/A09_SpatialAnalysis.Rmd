@@ -136,7 +136,15 @@ colnames(gage_location.sf)
 
 ```{r Plot the spatial features}
 #13. Plot the gage locations atop the county features
-
+ggplot()+
+  geom_sf(data=Nebraska_counties.sf, color='blue')+
+  geom_sf(data=gage_location.sf, color = 'maroon', shape = 'O')+
+  labs(title= "NWIS Gage Locations in Nebraska", fontface = "bold",
+       subtitle= "Claire Pajka")+
+  theme(
+    plot.title=element_text(hjust = 0.5, color = "blue"),
+    plot.subtitle=element_text(hjust = 0.5)
+  )
 
 ```
 
@@ -156,19 +164,24 @@ Lastly, we want to attach some gage height data to our site locations. I've cons
 
 ```{r Read in gage site data}
 #14. Read the site flow data into a data frame
-
-
+site_flow <- read.csv(here("Data", "Raw", "NWIS_SiteFlowData_NE_RAW.csv"), stringsAsFactors = TRUE)
+site_flow$site_no <- as_factor(site_flow$site_no)
+site_flow$gage_ht <- as_factor(site_flow$gage_ht)
+class(site_flow$site_no)
+class(site_flow$gage_ht)
 #15. Show the column names
-
+colnames(site_flow)
 
 #16. Join the flow data to our NWIS gage location spatial dataframe
-
+gage_location.sf <- gage_location.sf %>%
+  left_join(site_flow, by = c("site_no", "station_nm")) %>%
+  na.omit()
 
 #17. Show the column names of the joined dataset
-
+colnames(gage_location.sf)
 
 #18. Show the dimensions of this joined dataset
-
+dim(gage_location.sf)
 
 ```
 
@@ -181,7 +194,16 @@ Now we can examine where the flooding appears most acute by visualizing gage hei
 ```{r map gage sites}
 #Map the points, sized by gage height
 
-
+ggplot()+
+  geom_sf(data=Nebraska_counties.sf)+
+  geom_sf(data=gage_location.sf, aes(fill = "gage_ht"))+
+  scale_fill_gradient2(low="blue", high = "red")+
+  labs(title= "NWIS Gage Locations in Nebraska", fontface = "bold",
+       subtitle= "Claire Pajka")+
+  theme(
+    plot.title=element_text(hjust = 0.5, color = "blue"),
+    plot.subtitle=element_text(hjust = 0.5)
+  )
 ```
 
 ---
