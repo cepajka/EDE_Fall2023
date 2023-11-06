@@ -76,7 +76,7 @@ mapview(Nebraska_counties)
 6. What is the EPSG code of the Counties dataset? Is this a geographic or a projected coordinate reference system? (Or, does this CRS use angular or planar coordinate units?) To what datum is this CRS associated? (Tip: look for the EPSG code on <https://spatialreference.org> and examine the link for "Well Known Text as HTML" or "Human-Readable OGC WKT"...)
 
 > ANSWER: 
-> 
+> This is a geographic coordinate reference system. The EPSG code 4269. It is associated with the datum North American Datum 1983 (NAD1983).
 
 
 ### Read in gage locations csv as a dataframe, then display the column names it contains
@@ -89,16 +89,18 @@ Next we'll read in some USGS/NWIS gage location data added to the `Data/Raw` fol
 
 ```{r Read in USGS Gage Locations}
 #7. Read in gage locations csv as a dataframe
-
+gage_location <- read.csv(here("Data", "Raw", "NWIS_SiteInfo_NE_RAW.csv"), stringsAsFactors = TRUE)
+gage_location$site_no <- as_factor(gage_location$site_no)
+class(gage_location$site_no)
 
 #8. Reveal the names of the columns
 
-
+colnames(gage_location)
 ```
 
 9. What columns in the dataset contain the x and y coordinate values, respectively?  
 > ANSWER:
-> 
+> dec_long_va contains the x coordinate values, and dec_lat_va contains the y coordinate values.
 
 
 ### Convert the dataframe to a spatial features ("sf") dataframe
@@ -110,17 +112,19 @@ Next we'll read in some USGS/NWIS gage location data added to the `Data/Raw` fol
 
 ```{r Convert dataframe to sf dataframe}
 #10. Convert to an sf object
-
+gage_location.sf <- gage_location %>%
+  st_as_sf(coords = c('dec_long_va', 'dec_lat_va'),
+           crs=4326)
 
 #11. Re-examine the column names
-
+colnames(gage_location.sf)
 
 ```
 
 12. What new field(s) appear in the sf dataframe created? What field(s), if any, disappeared?
 
 >ANSWER: 
->
+> The field "geometry" appeared in the sf dataframe and is not present in the original dataframe. The fields dec_long_va and det_la_va disappeared from the original dataframe. 
 
 
 ### Plot the gage locations on top of the counties
