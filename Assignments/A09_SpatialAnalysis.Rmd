@@ -166,22 +166,22 @@ Lastly, we want to attach some gage height data to our site locations. I've cons
 #14. Read the site flow data into a data frame
 site_flow <- read.csv(here("Data", "Raw", "NWIS_SiteFlowData_NE_RAW.csv"), stringsAsFactors = TRUE)
 site_flow$site_no <- as_factor(site_flow$site_no)
-site_flow$gage_ht <- as_factor(site_flow$gage_ht)
+site_flow$gage_ht <- as.numeric(site_flow$gage_ht)#changed this to a numeric variable to try and get rid of the variable discrete value supplied to continuous scale on the graph later on
 class(site_flow$site_no)
 class(site_flow$gage_ht)
 #15. Show the column names
 colnames(site_flow)
 
 #16. Join the flow data to our NWIS gage location spatial dataframe
-gage_location.sf <- gage_location.sf %>%
+gage_location_join.sf <- gage_location.sf %>%
   left_join(site_flow, by = c("site_no", "station_nm")) %>%
   na.omit()
 
 #17. Show the column names of the joined dataset
-colnames(gage_location.sf)
+colnames(gage_location_join.sf)
 
 #18. Show the dimensions of this joined dataset
-dim(gage_location.sf)
+dim(gage_location_join.sf)
 
 ```
 
@@ -196,14 +196,38 @@ Now we can examine where the flooding appears most acute by visualizing gage hei
 
 ggplot()+
   geom_sf(data=Nebraska_counties.sf)+
-  geom_sf(data=gage_location.sf, aes(fill = "gage_ht"))+
-  scale_fill_gradient2(low="blue", high = "red")+
+  geom_sf(data=gage_location_join.sf, aes(fill = "gage_ht"))+
+  scale_fill_gradient(low="blue", high = "red")+
   labs(title= "NWIS Gage Locations in Nebraska", fontface = "bold",
        subtitle= "Claire Pajka")+
   theme(
     plot.title=element_text(hjust = 0.5, color = "blue"),
     plot.subtitle=element_text(hjust = 0.5)
   )
+
+
+ggplot()+
+  geom_sf(data=Nebraska_counties.sf)+
+  geom_sf(data=gage_location_join.sf), aes(fill = "gage_ht"), scale_fill_gradient2())+
+  labs(title= "NWIS Gage Locations in Nebraska", fontface = "bold",
+       subtitle= "Claire Pajka")+
+  theme(
+    plot.title=element_text(hjust = 0.5, color = "blue"),
+    plot.subtitle=element_text(hjust = 0.5)
+  )
+
+ggplot() + 
+  geom_sf(data=Nebraska_counties.sf)+
+  geom_sf(data=gage_location_join.sf, aes(fill = gage_ht),alpha=0.3) + 
+  scale_fill_gradient(low="red",high="blue")+
+  labs(title= "NWIS Gage Locations in Nebraska", fontface = "bold",
+       subtitle= "Claire Pajka")+
+  theme(
+    plot.title=element_text(hjust = 0.5, color = "blue"),
+    plot.subtitle=element_text(hjust = 0.5)
+  )
+
+
 ```
 
 ---
