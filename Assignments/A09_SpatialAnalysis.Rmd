@@ -230,10 +230,20 @@ Up next we will do some spatial analysis with our data. To prepare for this, we 
 
 ```{r spatial analysis}
 #20 Transform the counties and gage location datasets to UTM Zone 14
-
+utm_Nebraska_counties.sf <- st_transform(Nebraska_counties.sf, crs = 32614)
+utm_gage_location_join.sf <- st_transform(gage_location_join.sf, crs = 32614)
 
 #21 Plot the data
 
+ggplot() + 
+  geom_sf(data=utm_Nebraska_counties.sf, aes(color = GEOID), color= "blue2")+
+  geom_sf(data=utm_gage_location_join.sf, aes(color = gage_ht), color = "deeppink3")+
+  labs(title= "NWIS Gage Locations in Nebraska in UTM Zone 14 Projection", fontface = "bold",
+       subtitle= "Claire Pajka")+
+  theme(
+    plot.title=element_text(hjust = 0.5, color = "blue2"),
+    plot.subtitle=element_text(hjust = 0.5)
+  )
 
 ```
 
@@ -251,13 +261,35 @@ Now let's zoom into a particular county and examine the gages located there.
 
 ```{r spatial selection}
 #22 Select the county
-
-
+Dawson_county <- utm_Nebraska_counties.sf %>%
+  filter(NAME == "Dawson")
+view(Dawson_county)
 #23 Spatially select gages within the selected county
-
-
+dawson_gage_intersect <- utm_gage_location_join.sf %>% 
+  st_intersection(Dawson_county)
+mapview(dawson_gage_intersect)
 #24 Plot
 
+ggplot() + 
+  geom_sf(data=utm_Nebraska_counties.sf, aes(color = GEOID), color= "blue2")+
+  geom_sf(data = Dawson_county, aes(color= "purple"))+
+  geom_sf(data=dawson_gage_intersect, aes(color = "deeppink3"))+
+  labs(title= "NWIS Gage Locations in Nebraska in UTM Zone 14 Projection", fontface = "bold",
+       subtitle= "Claire Pajka")+
+  theme(
+    plot.title=element_text(hjust = 0.5, color = "blue2"),
+    plot.subtitle=element_text(hjust = 0.5)
+  )
 
 
+ggplot() + 
+  geom_sf(data=utm_Nebraska_counties.sf, color= "blue2")+
+  geom_sf(data= Dawson_county, color = "deeppink")+
+  geom_sf(data=dawson_gage_intersect, color = "purple")+
+  labs(title= "NWIS Gage Locations in Nebraska in UTM Zone 14 Projection", fontface = "bold",
+       subtitle= "Claire Pajka")+
+  theme(
+    plot.title=element_text(hjust = 0.5, color = "purple"),
+    plot.subtitle=element_text(hjust = 0.5)
+  )
 ```
