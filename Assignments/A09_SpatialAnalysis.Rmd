@@ -194,21 +194,10 @@ Now we can examine where the flooding appears most acute by visualizing gage hei
 ```{r map gage sites}
 #Map the points, sized by gage height
 
-ggplot()+
+ggplot() + 
   geom_sf(data=Nebraska_counties.sf)+
-  geom_sf(data=gage_location_join.sf, aes(fill = "gage_ht"))+
-  scale_fill_gradient(low="blue", high = "red")+
-  labs(title= "NWIS Gage Locations in Nebraska", fontface = "bold",
-       subtitle= "Claire Pajka")+
-  theme(
-    plot.title=element_text(hjust = 0.5, color = "blue"),
-    plot.subtitle=element_text(hjust = 0.5)
-  )
-
-
-ggplot()+
-  geom_sf(data=Nebraska_counties.sf)+
-  geom_sf(data=gage_location_join.sf), aes(fill = "gage_ht"), scale_fill_gradient2())+
+  geom_sf(data=gage_location_join.sf, aes(color = gage_ht))+
+  scale_color_continuous(low="blue",high="red")+
   labs(title= "NWIS Gage Locations in Nebraska", fontface = "bold",
        subtitle= "Claire Pajka")+
   theme(
@@ -218,16 +207,13 @@ ggplot()+
 
 ggplot() + 
   geom_sf(data=Nebraska_counties.sf)+
-  geom_sf(data=gage_location_join.sf, aes(fill = gage_ht),alpha=0.3) + 
-  scale_fill_gradient(low="red",high="blue")+
+  geom_sf(data=gage_location_join.sf, mapping = aes(color = gage_ht, size = gage_ht))+
   labs(title= "NWIS Gage Locations in Nebraska", fontface = "bold",
        subtitle= "Claire Pajka")+
   theme(
     plot.title=element_text(hjust = 0.5, color = "blue"),
     plot.subtitle=element_text(hjust = 0.5)
   )
-
-
 ```
 
 ---
