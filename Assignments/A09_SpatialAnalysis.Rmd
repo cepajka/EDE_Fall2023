@@ -86,8 +86,7 @@ Next we'll read in some USGS/NWIS gage location data added to the `Data/Raw` fol
 
 ```{r Read in USGS Gage Locations}
 #7. Read in gage locations csv as a dataframe
-gage_location <- read.csv(here("Data", "Raw", "NWIS_SiteInfo_NE_RAW.csv"), stringsAsFactors = TRUE,
-                          c=colClasses('site_no' = 'factor'))
+gage_location <- read.csv(here("Data", "Raw", "NWIS_SiteInfo_NE_RAW.csv"), stringsAsFactors = TRUE, c=colClasses('site_no' = 'factor'))
 gage_location$site_no <- as_factor(gage_location$site_no)
 class(gage_location$site_no)
 
@@ -164,7 +163,7 @@ Lastly, we want to attach some gage height data to our site locations. I've cons
 #14. Read the site flow data into a data frame
 site_flow <- read.csv(here("Data", "Raw", "NWIS_SiteFlowData_NE_RAW.csv"), stringsAsFactors = TRUE)
 site_flow$site_no <- as_factor(site_flow$site_no)
-site_flow$gage_ht <- as.numeric(site_flow$gage_ht)#changed this to a numeric variable to try and get rid of the variable discrete value supplied to continuous scale on the graph later on
+site_flow$gage_ht <- as.numeric(site_flow$gage_ht)
 class(site_flow$site_no)
 class(site_flow$gage_ht)
 #15. Show the column names
@@ -274,7 +273,7 @@ Dawson_county_gage_plot <-
   ggplot() + 
   geom_sf(data=utm_Nebraska_counties.sf, color= "blue2")+
   geom_sf(data= Dawson_county, fill = "powderblue")+
-  geom_sf(data=dawson_gage_intersect, color = "deeppink2")+
+  geom_sf(data=dawson_gage_intersect, color = "deeppink2", size = 0.75)+
   labs(title= "NWIS Gage Locations in Dawson County, Nebraska", fontface = "bold",
        subtitle= "Projection: UTM Zone 14\n Claire Pajka")+
   theme(
