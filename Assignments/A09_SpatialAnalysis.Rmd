@@ -66,9 +66,6 @@ st_crs(Nebraska_counties.sf)
 
 #5. Plot the data
 
-counties_plot_original <- ggplot(data=Nebraska_counties.sf) + geom_sf() #this didn't work
-view(counties_plot_original)
-
 mapview(Nebraska_counties)
 
 ```
@@ -76,7 +73,7 @@ mapview(Nebraska_counties)
 6. What is the EPSG code of the Counties dataset? Is this a geographic or a projected coordinate reference system? (Or, does this CRS use angular or planar coordinate units?) To what datum is this CRS associated? (Tip: look for the EPSG code on <https://spatialreference.org> and examine the link for "Well Known Text as HTML" or "Human-Readable OGC WKT"...)
 
 > ANSWER: 
-> This is a geographic coordinate reference system. The EPSG code 4269. It is associated with the datum North American Datum 1983 (NAD1983).
+> The EPSG code 4269. This is a projected coordinate reference system. It is associated with the datum North American Datum 1983 (NAD1983).
 
 
 ### Read in gage locations csv as a dataframe, then display the column names it contains
@@ -89,7 +86,8 @@ Next we'll read in some USGS/NWIS gage location data added to the `Data/Raw` fol
 
 ```{r Read in USGS Gage Locations}
 #7. Read in gage locations csv as a dataframe
-gage_location <- read.csv(here("Data", "Raw", "NWIS_SiteInfo_NE_RAW.csv"), stringsAsFactors = TRUE)
+gage_location <- read.csv(here("Data", "Raw", "NWIS_SiteInfo_NE_RAW.csv"), stringsAsFactors = TRUE,
+                          c=colClasses('site_no' = 'factor'))
 gage_location$site_no <- as_factor(gage_location$site_no)
 class(gage_location$site_no)
 
@@ -138,7 +136,7 @@ colnames(gage_location.sf)
 #13. Plot the gage locations atop the county features
 ggplot()+
   geom_sf(data=Nebraska_counties.sf, color='blue')+
-  geom_sf(data=gage_location.sf, color = 'maroon', shape = 'O')+
+  geom_sf(data=gage_location.sf, color = 'deeppink3', fill = 'deeppink3')+
   labs(title= "NWIS Gage Locations in Nebraska", fontface = "bold",
        subtitle= "Claire Pajka")+
   theme(
@@ -194,6 +192,7 @@ Now we can examine where the flooding appears most acute by visualizing gage hei
 ```{r map gage sites}
 #Map the points, sized by gage height
 
+#below is visualization by color
 ggplot() + 
   geom_sf(data=Nebraska_counties.sf)+
   geom_sf(data=gage_location_join.sf, aes(color = gage_ht))+
@@ -205,6 +204,7 @@ ggplot() +
     plot.subtitle=element_text(hjust = 0.5)
   )
 
+#below is visualization by size
 ggplot() + 
   geom_sf(data=Nebraska_counties.sf)+
   geom_sf(data=gage_location_join.sf, mapping = aes(color = gage_ht, size = gage_ht))+
@@ -238,8 +238,8 @@ utm_gage_location_join.sf <- st_transform(gage_location_join.sf, crs = 32614)
 ggplot() + 
   geom_sf(data=utm_Nebraska_counties.sf, aes(color = GEOID), color= "blue2")+
   geom_sf(data=utm_gage_location_join.sf, aes(color = gage_ht), color = "deeppink3")+
-  labs(title= "NWIS Gage Locations in Nebraska in UTM Zone 14 Projection", fontface = "bold",
-       subtitle= "Claire Pajka")+
+  labs(title= "NWIS Gage Locations by County in Nebraska", fontface = "bold",
+       subtitle= "Projection: UTM Zone 14\n Claire Pajka")+
   theme(
     plot.title=element_text(hjust = 0.5, color = "blue2"),
     plot.subtitle=element_text(hjust = 0.5)
@@ -270,26 +270,16 @@ dawson_gage_intersect <- utm_gage_location_join.sf %>%
 mapview(dawson_gage_intersect)
 #24 Plot
 
-ggplot() + 
-  geom_sf(data=utm_Nebraska_counties.sf, aes(color = GEOID), color= "blue2")+
-  geom_sf(data = Dawson_county, aes(color= "purple"))+
-  geom_sf(data=dawson_gage_intersect, aes(color = "deeppink3"))+
-  labs(title= "NWIS Gage Locations in Nebraska in UTM Zone 14 Projection", fontface = "bold",
-       subtitle= "Claire Pajka")+
-  theme(
-    plot.title=element_text(hjust = 0.5, color = "blue2"),
-    plot.subtitle=element_text(hjust = 0.5)
-  )
-
-
-ggplot() + 
+Dawson_county_gage_plot <- 
+  ggplot() + 
   geom_sf(data=utm_Nebraska_counties.sf, color= "blue2")+
-  geom_sf(data= Dawson_county, color = "deeppink")+
-  geom_sf(data=dawson_gage_intersect, color = "purple")+
-  labs(title= "NWIS Gage Locations in Nebraska in UTM Zone 14 Projection", fontface = "bold",
-       subtitle= "Claire Pajka")+
+  geom_sf(data= Dawson_county, fill = "powderblue")+
+  geom_sf(data=dawson_gage_intersect, color = "deeppink2")+
+  labs(title= "NWIS Gage Locations in Dawson County, Nebraska", fontface = "bold",
+       subtitle= "Projection: UTM Zone 14\n Claire Pajka")+
   theme(
-    plot.title=element_text(hjust = 0.5, color = "purple"),
+    plot.title=element_text(color = "blue2"),
     plot.subtitle=element_text(hjust = 0.5)
   )
+print(Dawson_county_gage_plot)
 ```
