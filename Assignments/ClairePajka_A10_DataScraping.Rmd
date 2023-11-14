@@ -203,6 +203,7 @@ durham_2015_plot
 Asheville_2015 <- scrape.it('01-11-010', 2015)
 view(Asheville_2015)
 
+ggplot()
 
 ```
 
@@ -213,8 +214,7 @@ view(Asheville_2015)
 
 ```{r fetch.and.plot.Asheville.multiyear.data }
 #9 
-Asheville_2010_2021 <- seq(2010,2021) %>%
-  map(scrape.it) %>%
+Asheville_2010_2021 <- map2(seq(2010,2021), the_PWSID, scrape.it) %>%
   bind_rows()
 
 ```
