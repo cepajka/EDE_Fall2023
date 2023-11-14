@@ -127,15 +127,60 @@ MDU_plot
 
 ```{r construct.a.scraping.function}
 #6. 
+#base_url <- 'https://www.ncwater.org/WUDC/app/LWSP/report.php?pwsid=03-32-010&year=2022'
+#the_PWSID <- '03-32-010'
+#the_year <- '2022'
+#scrape_url <- paste0(base_url, 'pwsid=03-32-010', the_PWSID, '&year=2022', the_year)
+#print(scrape_url)
+  #water_website <- read_html(scrape_url)
 
+#month sequence for later 
+month_data <- c("Jan", "May", "Sept", "Feb", "June", "Oct", "Mar", "July", "Nov", "Apr", "Aug", "Dec")
 
+scrape.it <- function(the_PWSID, the_year){
+    water_website <- read_html(paste0('https://www.ncwater.org/WUDC/app/LWSP/report.php?', 'pwsid=',
+                                  the_PWSID, '&year=', the_year))
+
+water_system_name_tag <- 'div+ table tr:nth-child(1) td:nth-child(2)'
+PWSID_tag <- 'td tr:nth-child(1) td:nth-child(5)'
+Ownership_tag <- 'div+ table tr:nth-child(2) td:nth-child(4)'
+maximum_daily_use_tag <- 'th~ td+ td'
+
+the_water_system_name <- water_website %>% html_nodes(water_system_name_tag) %>%
+  html_text()
+the_PWSID <- water_website %>% html_nodes(PWSID_tag) %>%
+  html_text()
+the_Ownership <- water_website %>% html_nodes(Ownership_tag) %>%
+  html_text()
+the_max_daily_use <- water_website %>% html_nodes(maximum_daily_use_tag) %>%
+  html_text()
+
+df_max_daily_use <- data.frame(
+  "Month" = c("Jan", "May", "Sept", "Feb", "June", "Oct", "Mar", "July", "Nov", "Apr", "Aug", "Dec"),
+  "Year" = rep(2022,12),
+  "Maximum_Daily_Use" = as.numeric(the_max_daily_use))
+
+  df_max_daily_use <- data.frame("Month" = rep(month_data),
+                               "Year" = rep(the_year,12),
+                               "Maximum Daily Use" = (the_max_daily_use)) %>% 
+    mutate(WaterSystemName = !!the_water_system_name,
+           PWSID = !!the_PWSID,
+           Ownership = !!the_Ownership,
+           Date = my(paste(Month,"-",Year))) %>%
+  arrange(Date)
+
+return(df_max_daily_use)
+  }
 ```
 
 7. Use the function above to extract and plot max daily withdrawals for Durham (PWSID='03-32-010') for each month in 2015
 
 ```{r fetch.and.plot.Durham.2015.data}
 #7 
-
+scrape_2015 <- data.frame(
+  "Month" = c("Jan", "May", "Sept", "Feb", "June", "Oct", "Mar", "July", "Nov", "Apr", "Aug", "Dec"))
+scrape_2015 <- scrape.it('03-32-010',2015)
+view(scrape_2015)
 
 ```
 
@@ -143,6 +188,8 @@ MDU_plot
 
 ```{r fetch.and.plot.Asheville.2015.data}
 #8 
+Asheville_2015 <- scrape.it('01-11-010', 2015)
+view(Asheville_2015)
 
 
 ```
@@ -154,7 +201,9 @@ MDU_plot
 
 ```{r fetch.and.plot.Asheville.multiyear.data }
 #9 
-
+Asheville_2010_2021 <- seq(2010,2021) %>%
+  map(scrape.it) %>%
+  bind_rows()
 
 ```
 
