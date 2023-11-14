@@ -162,7 +162,7 @@ df_max_daily_use <- data.frame(
 
   df_max_daily_use <- data.frame("Month" = rep(month_data),
                                "Year" = rep(the_year,12),
-                               "Maximum Daily Use" = (the_max_daily_use)) %>% 
+                               "Maximum Daily Use" = as.numeric(the_max_daily_use)) %>% 
     mutate(WaterSystemName = !!the_water_system_name,
            PWSID = !!the_PWSID,
            Ownership = !!the_Ownership,
@@ -177,11 +177,23 @@ return(df_max_daily_use)
 
 ```{r fetch.and.plot.Durham.2015.data}
 #7 
-scrape_2015 <- data.frame(
-  "Month" = c("Jan", "May", "Sept", "Feb", "June", "Oct", "Mar", "July", "Nov", "Apr", "Aug", "Dec"))
 scrape_2015 <- scrape.it('03-32-010',2015)
 view(scrape_2015)
 
+durham_2015_plot <- 
+  ggplot(scrape_2015,
+         aes(x=Date,y=Maximum.Daily.Use)) + 
+  geom_line() + 
+  geom_smooth(method="loess",se=FALSE) +
+  labs(title = "2015 Maximum Daily Water Withdrawl for Durham", fontface= "bold",
+       subtitle = "PWSID 03-32-010",
+       y="Maximum Daily Water Use (MGD)",
+       x="Date")+
+  theme(
+    plot.title=element_text(hjust = 0.5, color = "blue"),
+    plot.subtitle=element_text(hjust = 0.5)
+  )
+durham_2015_plot
 ```
 
 8. Use the function above to extract data for Asheville (PWSID = 01-11-010) in 2015. Combine this data with the Durham data collected above and create a plot that compares Asheville's to Durham's water withdrawals.
