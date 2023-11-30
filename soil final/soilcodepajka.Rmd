@@ -1,0 +1,48 @@
+---
+title: "pajkasoil"
+output: html_document
+date: "2023-11-30"
+---
+
+```{r setup, readins, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(lubridate)
+library(tidyverse)
+library(here)
+library(dplyr)
+
+soil_complete2001 <- read.csv("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/soil final/SP02001.csv")
+soil_complete2001 <- soil_complete2001 %>%
+  drop_na()
+
+soil_complete2002 <- read.csv("C:/Users/cepaj/OneDrive/Documents/EDE_Fall2023/soil final/SP02002.csv")
+soil_complete2002
+soil_complete2002 <- soil_complete2002 %>%
+  drop_na()
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r split elevations}
+low_elev <- soil_complete2002 %>%
+  filter(ELEVATION < 800)
+
+mid_elev <- filter(soil_complete2002, ELEVATION %in% 800:1199)
+
+high_elev <- filter(soil_complete2002, ELEVATION >= 1200)
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
